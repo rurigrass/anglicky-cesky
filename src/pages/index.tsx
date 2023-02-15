@@ -8,6 +8,7 @@ import { useState } from 'react'
 
 const Home = () => {
   const [showVocabGame, setShowVocabGame] = useState<Boolean>(false)
+  const [showVerbsGame, setShowVerbsGame] = useState<Boolean>(false)
 
 
   return (
@@ -18,13 +19,23 @@ const Home = () => {
       <Header />
       <div className=" h-screen min-h-screen -mt-14 flex justify-center items-center bg-duo-eel">
         <div className='flex flex-col space-y-2 bg-blue-600 rounded-xl mx-2 w-full sm:w-4/5 md:w-3/4 lg:w-1/2 py-9 px-3 md:px-9 bg-duo-hare border-b-4 border-b-duo-wolf'>
-          <button className='button bg-duo-macaw' onClick={() => setShowVocabGame(!showVocabGame)}>
+          <button className='button bg-duo-humpback text-white hover:bg-duo-macaw' onClick={() => setShowVocabGame(!showVocabGame)}>
             Vocabulary
           </button>
-          {showVocabGame &&
+          {/* {showVocabGame &&
             <div className='flex justify-center space-y-2 py-2 bg-duo-wolf rounded-xl border-t-4 border-b-duo-eel'>
               <button className='button bg-duo-macaw'>
                 <Link href="/vocabulary">Start Game </Link>
+              </button>
+            </div>
+          } */}
+          <button className='button bg-duo-humpback text-white hover:bg-duo-macaw' onClick={() => setShowVerbsGame(!showVerbsGame)}>
+            Verbs
+          </button>
+          {showVerbsGame &&
+            <div className='flex justify-center space-y-2 py-2 bg-duo-wolf rounded-xl border-t-4 border-b-duo-eel'>
+              <button className='button bg-duo-humpback  text-white hover:bg-duo-macaw'>
+                <Link href="/verbs">Start Game </Link>
               </button>
             </div>
           }

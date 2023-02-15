@@ -11,7 +11,7 @@ module.exports = {
         wolf: "#777777",
         hare: "#afafaf",
         macaw: "#1cb0f6",
-        green: "#2EFFAB",
+        humpback: "#2b70c9",
         greenMiddle: "#009F57",
         yellow: "#FCFD43",
         red: "#C6001E",
