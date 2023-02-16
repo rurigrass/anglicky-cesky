@@ -6,7 +6,9 @@ interface IVerb {
 }
 
 const verbs = ({ verbs }: { verbs: IVerb[] }) => {
-    console.log(verbs);
+    verbs.find(x => console.log(x.verb.cz))
+
+
 
     return (
         <>
