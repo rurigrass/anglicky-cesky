@@ -21,7 +21,7 @@ const verbs = ({ verbs }: { verbs: IVerb[] }) => {
 }
 
 export async function getServerSideProps() {
-    let { data } = await supabase.from('countries').select()
+    let { data } = await supabase.from('verbs').select()
 
     return {
         props: {
