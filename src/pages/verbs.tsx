@@ -2,7 +2,22 @@ import Header from "@/components/Header"
 import { supabase } from "../../lib/supabaseClient"
 
 interface IVerb {
-    id: string
+    id: bigint
+    verb: { cz: string, en: string },
+    positive?: {
+        plural: {
+            1: { en: { we: string }, cz: { my: string } }
+            2: { en: { you: string }, cz: { vy: string } }
+            3: { en: { they: string }, cz: { oni: string } }
+        }
+        singular: {
+            1: { en: { I: string }, cz: { já: string } }
+            2: { en: { you: string }, cz: { ty: string } }
+            3: { en: { he: string }, cz: { on: string } }
+        }
+    },
+    negative?: {}
+
 }
 
 const verbs = ({ verbs }: { verbs: IVerb[] }) => {
