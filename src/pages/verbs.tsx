@@ -34,8 +34,6 @@ interface IVerb {
 const verbs = ({ verbs }: { verbs: IVerb[] }) => {
     verbs.find(x => console.log(x.verb.cz))
 
-
-
     return (
         <>
             <Header />

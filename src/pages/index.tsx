@@ -5,11 +5,9 @@ import Header from '@/components/Header'
 import Link from 'next/link'
 import { useState } from 'react'
 
-
 const Home = () => {
   const [showVocabGame, setShowVocabGame] = useState<Boolean>(false)
   const [showVerbsGame, setShowVerbsGame] = useState<Boolean>(false)
-
 
   return (
     <>
