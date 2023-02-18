@@ -16,7 +16,18 @@ interface IVerb {
             3: { en: { he: string }, cz: { on: string } }
         }
     },
-    negative?: {}
+    negative?: {
+        plural: {
+            1: { en: { we: string }, cz: { my: string } }
+            2: { en: { you: string }, cz: { vy: string } }
+            3: { en: { they: string }, cz: { oni: string } }
+        }
+        singular: {
+            1: { en: { I: string }, cz: { já: string } }
+            2: { en: { you: string }, cz: { ty: string } }
+            3: { en: { he: string }, cz: { on: string } }
+        }
+    }
 
 }
 
