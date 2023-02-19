@@ -3,36 +3,38 @@ import { supabase } from "../../lib/supabaseClient"
 
 interface IVerb {
     id: bigint
-    verb: { cz: string, en: string },
+    infinitive: { cz: string, en: string },
     positive?: {
         plural: {
-            1: { en: { we: string }, cz: { my: string } }
-            2: { en: { you: string }, cz: { vy: string } }
-            3: { en: { they: string }, cz: { oni: string } }
+            1: { en: { verb: string }, cz: { verb: string } }
+            2: { en: { verb: string }, cz: { verb: string } }
+            3: { en: { verb: string }, cz: { verb: string } }
         }
         singular: {
-            1: { en: { I: string }, cz: { já: string } }
-            2: { en: { you: string }, cz: { ty: string } }
-            3: { en: { he: string }, cz: { on: string } }
+            1: { en: { verb: string }, cz: { verb: string } }
+            2: { en: { verb: string }, cz: { verb: string } }
+            3: { en: { verb: string }, cz: { verb: string } }
         }
     },
     negative?: {
         plural: {
-            1: { en: { we: string }, cz: { my: string } }
-            2: { en: { you: string }, cz: { vy: string } }
-            3: { en: { they: string }, cz: { oni: string } }
+            1: { en: { verb: string }, cz: { verb: string } }
+            2: { en: { verb: string }, cz: { verb: string } }
+            3: { en: { verb: string }, cz: { verb: string } }
         }
         singular: {
-            1: { en: { I: string }, cz: { já: string } }
-            2: { en: { you: string }, cz: { ty: string } }
-            3: { en: { he: string }, cz: { on: string } }
+            1: { en: { verb: string }, cz: { verb: string } }
+            2: { en: { verb: string }, cz: { verb: string } }
+            3: { en: { verb: string }, cz: { verb: string } }
         }
     }
 
 }
 
 const verbs = ({ verbs }: { verbs: IVerb[] }) => {
-    verbs.find(x => console.log(x.verb.cz))
+    console.log("the verbs ", verbs);
+
+    verbs.find(x => console.log(x.infinitive.cz))
 
     return (
         <>
