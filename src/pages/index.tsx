@@ -7,7 +7,7 @@ import { useState } from 'react'
 
 const Home = () => {
   const [showVocabGame, setShowVocabGame] = useState<Boolean>(false)
-  const [showVerbsGame, setShowVerbsGame] = useState<Boolean>(false)
+  const [showConjugationGame, setShowConjugationGame] = useState<Boolean>(false)
 
   return (
     <>
@@ -27,13 +27,13 @@ const Home = () => {
               </button>
             </div>
           } */}
-          <button className='button bg-duo-humpback text-white hover:bg-duo-macaw' onClick={() => setShowVerbsGame(!showVerbsGame)}>
+          <button className='button bg-duo-humpback text-white hover:bg-duo-macaw' onClick={() => setShowConjugationGame(!showConjugationGame)}>
             Verbs
           </button>
-          {showVerbsGame &&
+          {showConjugationGame &&
             <div className='flex justify-center space-y-2 py-2 bg-duo-wolf rounded-xl border-t-4 border-b-duo-eel'>
               <button className='button bg-duo-humpback  text-white hover:bg-duo-macaw'>
-                <Link href="/verbs">Start Game </Link>
+                <Link href="/conjugation">Start Game </Link>
               </button>
             </div>
           }
