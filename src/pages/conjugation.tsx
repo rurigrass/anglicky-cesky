@@ -1,19 +1,37 @@
 import Header from "@/components/Header"
 import ProgressBar from "@/components/ProgressBar";
+import { useState } from "react";
 import { IVerb } from "typings";
 import { supabase } from "../../lib/supabaseClient"
 
+interface IinitialState {
+    currentQuestion: number,
+    numberOfQuestions: number,
+}
 
 let progress = 50
 // let progress = Math.round(currentQuestion / numberOfQuestions * 100)
 
-const verbs = ({ verbs }: { verbs: IVerb[] }) => {
-    const initialState = {
+const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
+    const initialState: IinitialState = {
         currentQuestion: 0,
+        numberOfQuestions: 0,
     }
+    const [state, setState] = useState(initialState);
+    let { currentQuestion, numberOfQuestions } = state;
 
     const generateQuestions = (selectedVerbs = ["být", "mít"], numberOfQuestions = 5) => {
+        //filters out all the selected verbs
         const verbsToTest = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb))
+        //random function:
+        const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
+        //selects number of conjucations randomly numberOfQuestions times
+        let conjugationsToTest = []
+        for (let i = 0; i < numberOfQuestions; i++) {
+            let verb = verbsToTest[random(selectedVerbs.length)]
+            console.log(verb);
+
+        }
 
 
 
@@ -65,4 +83,4 @@ export async function getServerSideProps() {
     }
 }
 
-export default verbs
+export default Conjugation
