@@ -1,7 +1,7 @@
 export interface IVerb {
   id: bigint
   infinitive: { cz: string, en: string },
-  positive?: {
+  positive: {
     plural: {
       first: { en: { verb: string }, cz: { verb: string } }
       second: { en: { verb: string }, cz: { verb: string } }

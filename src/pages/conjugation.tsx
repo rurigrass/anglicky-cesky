@@ -29,11 +29,15 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
         let conjugationsToTest: any = []
         for (let i = 0; i < numberOfQuestions; i++) {
             const verb = verbsToTest[random(selectedVerbs.length)]
-            const amount: string = ["singular", "plural"][random(2)]
+            const amount = ["singular", "plural"][random(2)]
             const person = ["first", "second", "third"][random(3)]
-            const theConjugatedVerbIs = verb?.positive
 
-            console.log("theverbis ", theConjugatedVerbIs["plural"]);
+            const poop = "plural"
+            const theConjugatedVerbIs = verb?.positive[poop]
+
+
+            console.log("theverbis ", theConjugatedVerbIs) // eslint-disable-line
+
             // console.log("thebracket ", typeof amount);
 
 
