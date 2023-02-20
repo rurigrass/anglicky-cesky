@@ -15,37 +15,39 @@ let progress = 50
 const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
     const initialState: IinitialState = {
         currentQuestion: 0,
-        numberOfQuestions: 0,
+        numberOfQuestions: 1,
     }
     const [state, setState] = useState(initialState);
     let { currentQuestion, numberOfQuestions } = state;
 
-    const generateQuestions = (selectedVerbs = ["být", "mít"], numberOfQuestions = 5) => {
+    const generateQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
         //filters out all the selected verbs
         const verbsToTest = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb))
         //random function:
         const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
         //selects number of conjucations randomly numberOfQuestions times
-        let conjugationsToTest = []
+        let conjugationsToTest: any = []
         for (let i = 0; i < numberOfQuestions; i++) {
-            let verb = verbsToTest[random(selectedVerbs.length)]
-            console.log(verb);
+            const verb = verbsToTest[random(selectedVerbs.length)]
+            const amount: string = ["singular", "plural"][random(2)]
+            const person = ["first", "second", "third"][random(3)]
+            const theConjugatedVerbIs = verb?.positive
+
+            console.log("theverbis ", theConjugatedVerbIs["plural"]);
+            // console.log("thebracket ", typeof amount);
+
+
+            // conjugationsToTest.push({ verb?.infinitive, verb.})
+            // console.log("verb iteration", verb);
 
         }
 
-
-
-
-        console.log(verbsToTest);
-
         // console.log("the verbs ", verbs);
 
+        // console.log(conjugationsToTest);
     }
-
-    generateQuestions()
-
-
-    // verbs.find(x => console.log(x.infinitive.cz))
+    const selectedVerbs = ["být", "mít"]
+    generateQuestions(selectedVerbs, numberOfQuestions)
 
     return (
         <div className="flex flex-col h-screen bg-duo-eel">

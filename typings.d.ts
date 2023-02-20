@@ -3,26 +3,26 @@ export interface IVerb {
   infinitive: { cz: string, en: string },
   positive?: {
     plural: {
-      1: { en: { verb: string }, cz: { verb: string } }
-      2: { en: { verb: string }, cz: { verb: string } }
-      3: { en: { verb: string }, cz: { verb: string } }
+      first: { en: { verb: string }, cz: { verb: string } }
+      second: { en: { verb: string }, cz: { verb: string } }
+      third: { en: { verb: string }, cz: { verb: string } }
     }
     singular: {
-      1: { en: { verb: string }, cz: { verb: string } }
-      2: { en: { verb: string }, cz: { verb: string } }
-      3: { en: { verb: string }, cz: { verb: string } }
+      first: { en: { verb: string }, cz: { verb: string } }
+      second: { en: { verb: string }, cz: { verb: string } }
+      third: { en: { verb: string }, cz: { verb: string } }
     }
   },
   negative?: {
     plural: {
-      1: { en: { verb: string }, cz: { verb: string } }
-      2: { en: { verb: string }, cz: { verb: string } }
-      3: { en: { verb: string }, cz: { verb: string } }
+      first: { en: { verb: string }, cz: { verb: string } }
+      second: { en: { verb: string }, cz: { verb: string } }
+      third: { en: { verb: string }, cz: { verb: string } }
     }
     singular: {
-      1: { en: { verb: string }, cz: { verb: string } }
-      2: { en: { verb: string }, cz: { verb: string } }
-      3: { en: { verb: string }, cz: { verb: string } }
+      first: { en: { verb: string }, cz: { verb: string } }
+      second: { en: { verb: string }, cz: { verb: string } }
+      third: { en: { verb: string }, cz: { verb: string } }
     }
   }
 }
