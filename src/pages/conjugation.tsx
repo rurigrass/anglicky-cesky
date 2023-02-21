@@ -1,6 +1,6 @@
 import Header from "@/components/Header"
 import ProgressBar from "@/components/ProgressBar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IVerb } from "typings";
 import { supabase } from "../../lib/supabaseClient"
 
@@ -43,56 +43,39 @@ const pronouns = {
 let progress = 50
 // let progress = Math.round(currentQuestion / numberOfQuestions * 100)
 
-const Conjugation = (
-    // { verbs }: { verbs: IVerb[] }
-) => {
-    const [verbs, setVerbs] = useState<IVerb[]>()
+const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
     const initialState: IinitialState = {
         currentQuestion: 0,
         numberOfQuestions: 2,
     }
     const [state, setState] = useState(initialState);
-    const [verbsArrayState, setVerbsArrayState] = useState([])
     let { currentQuestion, numberOfQuestions } = state;
+
+    const generateQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
+        //filters out all the selected verbs
+        const verbsToTest = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb))
+        //random function:
+        const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
+        let verbsArray = []
+        //selects number of conjucations randomly numberOfQuestions times
+        for (let i = 0; i < numberOfQuestions; i++) {
+            const verb = verbsToTest[random(selectedVerbs.length)]
+            const amountArray = ["singular", "plural"] as const
+            const personArray = ["first", "second", "third"] as const
+            const amount = amountArray[random(2)];
+            const person = personArray[random(3)];
+            const theConjugatedVerbIs = verb?.positive[amount][person]
+            const pronoun = pronouns[amount][person]
+            verbsArray.push({ pronoun, theConjugatedVerbIs })
+        }
+        return verbsArray
+    }
+
+
     const selectedVerbs = ["být", "mít"]
 
 
-    useEffect(() => {
-        const fetchVerbs = async () => {
-            try {
-                const { data, error } = await supabase.from('verbs').select()
-                if (error) throw error;
-                setVerbs(data)
-            } catch (error: any) { alert(error.message) }
-        }
-        fetchVerbs()
-    }, [])
-
-    console.log(verbs);
-
-    // const generateQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
-    //     //filters out all the selected verbs
-    //     const verbsToTest = selectedVerbs.map(selectedVerb => verbs?.find(verb => verb.infinitive.cz === selectedVerb))
-    //     //random function:
-    //     const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
-    //     let verbsArray = []
-    //     //selects number of conjucations randomly numberOfQuestions times
-    //     for (let i = 0; i < numberOfQuestions; i++) {
-    //         const verb = verbsToTest[random(selectedVerbs.length)]
-    //         const amountArray = ["singular", "plural"] as const
-    //         const personArray = ["first", "second", "third"] as const
-    //         const amount = amountArray[random(2)];
-    //         const person = personArray[random(3)];
-    //         const theConjugatedVerbIs = verb?.positive[amount][person]
-    //         const pronoun = pronouns[amount][person]
-    //         verbsArray.push({ pronoun, theConjugatedVerbIs })
-    //     }
-    //     console.log("THERANDOMVERBS ", verbsArray);
-
-    //     // setVerbsArrayState([...verbsArray]);
-    // }
-    // generateQuestions(selectedVerbs, numberOfQuestions)
-    // console.log(verbsArrayState)
+    console.log(generateQuestions(selectedVerbs, numberOfQuestions))
 
 
     return (
@@ -127,14 +110,14 @@ const Conjugation = (
     )
 }
 
-// export async function getServerSideProps() {
-//     let { data } = await supabase.from('verbs').select()
+export async function getServerSideProps() {
+    let { data } = await supabase.from('verbs').select()
 
-//     return {
-//         props: {
-//             verbs: data
-//         },
-//     }
-// }
+    return {
+        props: {
+            verbs: data
+        },
+    }
+}
 
 export default Conjugation
