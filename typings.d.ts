@@ -26,3 +26,5 @@ export interface IVerb {
     }
   }
 }
+
+export interface DaBest { en: { verb: string }, cz: { verb: string } }

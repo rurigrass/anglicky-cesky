@@ -1,7 +1,7 @@
 import Header from "@/components/Header"
 import ProgressBar from "@/components/ProgressBar";
 import { useState } from "react";
-import { IVerb } from "typings";
+import { IVerb, DaBest } from "typings";
 import { supabase } from "../../lib/supabaseClient"
 
 interface IinitialState {
@@ -26,24 +26,14 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
         //random function:
         const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
         //selects number of conjucations randomly numberOfQuestions times
-        let conjugationsToTest: any = []
         for (let i = 0; i < numberOfQuestions; i++) {
             const verb = verbsToTest[random(selectedVerbs.length)]
-            const amount = ["singular", "plural"][random(2)]
-            const person = ["first", "second", "third"][random(3)]
-
-            const poop = "plural"
-            const theConjugatedVerbIs = verb?.positive[poop]
-
-
-            console.log("theverbis ", theConjugatedVerbIs) // eslint-disable-line
-
-            // console.log("thebracket ", typeof amount);
-
-
-            // conjugationsToTest.push({ verb?.infinitive, verb.})
-            // console.log("verb iteration", verb);
-
+            const amountArray = ["singular", "plural"] as const
+            const personArray = ["first", "second", "third"] as const
+            const amount = amountArray[random(2)];
+            const person = personArray[random(3)];
+            const theConjugatedVerbIs = verb?.positive[amount][person]
+            console.log("theverbis ", theConjugatedVerbIs)
         }
 
         // console.log("the verbs ", verbs);
