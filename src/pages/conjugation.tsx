@@ -9,6 +9,37 @@ interface IinitialState {
     numberOfQuestions: number,
 }
 
+const pronouns = {
+    singular: {
+        first: {
+            en: "I",
+            cz: "ja"
+        },
+        second: {
+            en: "you",
+            cz: "ty"
+        },
+        third: {
+            en: "he",
+            cz: "on"
+        }
+    },
+    plural: {
+        first: {
+            en: "we",
+            cz: "my"
+        },
+        second: {
+            en: "you",
+            cz: "vy"
+        },
+        third: {
+            en: "they",
+            cz: "oni"
+        }
+    }
+}
+
 let progress = 50
 // let progress = Math.round(currentQuestion / numberOfQuestions * 100)
 
@@ -25,6 +56,7 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
         const verbsToTest = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb))
         //random function:
         const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
+        let verbsArray = []
         //selects number of conjucations randomly numberOfQuestions times
         for (let i = 0; i < numberOfQuestions; i++) {
             const verb = verbsToTest[random(selectedVerbs.length)]
@@ -33,15 +65,18 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
             const amount = amountArray[random(2)];
             const person = personArray[random(3)];
             const theConjugatedVerbIs = verb?.positive[amount][person]
-            console.log("theverbis ", theConjugatedVerbIs)
+            const pronoun = pronouns[amount][person]
+            verbsArray.push({ pronoun, theConjugatedVerbIs })
         }
-
-        // console.log("the verbs ", verbs);
-
-        // console.log(conjugationsToTest);
+        return verbsArray
     }
+
+
     const selectedVerbs = ["být", "mít"]
-    generateQuestions(selectedVerbs, numberOfQuestions)
+
+    const generatedQuestion = generateQuestions(selectedVerbs, numberOfQuestions)[currentQuestion];
+    console.log(generatedQuestion);
+
 
     return (
         <div className="flex flex-col h-screen bg-duo-eel">
@@ -52,7 +87,16 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
             <div className="">
                 {/* QUESTION */}
                 <div className="p-4 bg-duo-greenMiddle">
-                    <h3 className="text-white font-bold">Conjugate</h3>
+                    <h3 className="text-white font-bold">
+                        Translate:
+                        {/* {generatedQuestion && */}
+                        {/* {generatedQuestion && <div>hi</div>} */}
+                        <div>
+                            {generatedQuestion.pronoun.en}
+                        </div>
+                        {/* } */}
+                        {/* {generatedQuestions[currentQuestion].pronoun.en} {generatedQuestions[currentQuestion].theConjugatedVerbIs?.en} */}
+                    </h3>
                 </div>
                 {/* OPTIONS */}
                 <div className="h-20 bg-duo-macaw">
