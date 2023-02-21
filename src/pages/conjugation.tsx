@@ -75,7 +75,10 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
     const selectedVerbs = ["být", "mít"]
 
 
-    console.log(generateQuestions(selectedVerbs, numberOfQuestions))
+    const generatedQuestion = generateQuestions(selectedVerbs, numberOfQuestions)[currentQuestion]
+
+    console.log(generatedQuestion);
+
 
 
     return (
@@ -89,14 +92,18 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
                 <div className="p-4 bg-duo-greenMiddle">
                     <div className="text-white font-bold">
                         Translate:
-                        {/* {generatedQuestion &&
-                            generatedQuestion.pronoun.en
-                        } */}
-                        {/* {generatedQuestions[currentQuestion].pronoun.en} {generatedQuestions[currentQuestion].theConjugatedVerbIs?.en} */}
+                        {generatedQuestion &&
+                            <div>{generatedQuestion.pronoun.en} {generatedQuestion.theConjugatedVerbIs?.en}</div>
+                        }
                     </div>
                 </div>
                 {/* OPTIONS */}
                 <div className="h-20 bg-duo-macaw">
+                    <div>the answer is
+                        {/* {generatedQuestion &&
+                            <div>{generatedQuestion.pronoun.cz} {generatedQuestion.theConjugatedVerbIs?.cz}</div>
+                        } */}
+                    </div>
 
                 </div>
                 {/* <div className='flex flex-col space-y-2 bg-blue-600 rounded-xl mx-2 w-full sm:w-4/5 md:w-3/4 lg:w-1/2 py-9 px-3 md:px-9 bg-duo-hare border-b-4 border-b-duo-wolf'>
