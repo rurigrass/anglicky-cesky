@@ -1,7 +1,7 @@
 import Header from "@/components/Header"
 import ProgressBar from "@/components/ProgressBar";
-import { useState } from "react";
-import { IVerb, DaBest } from "typings";
+import { useEffect, useState } from "react";
+import { IVerb } from "typings";
 import { supabase } from "../../lib/supabaseClient"
 
 interface IinitialState {
@@ -43,39 +43,56 @@ const pronouns = {
 let progress = 50
 // let progress = Math.round(currentQuestion / numberOfQuestions * 100)
 
-const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
+const Conjugation = (
+    // { verbs }: { verbs: IVerb[] }
+) => {
+    const [verbs, setVerbs] = useState<IVerb[]>()
     const initialState: IinitialState = {
         currentQuestion: 0,
-        numberOfQuestions: 1,
+        numberOfQuestions: 2,
     }
     const [state, setState] = useState(initialState);
+    const [verbsArrayState, setVerbsArrayState] = useState([])
     let { currentQuestion, numberOfQuestions } = state;
-
-    const generateQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
-        //filters out all the selected verbs
-        const verbsToTest = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb))
-        //random function:
-        const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
-        let verbsArray = []
-        //selects number of conjucations randomly numberOfQuestions times
-        for (let i = 0; i < numberOfQuestions; i++) {
-            const verb = verbsToTest[random(selectedVerbs.length)]
-            const amountArray = ["singular", "plural"] as const
-            const personArray = ["first", "second", "third"] as const
-            const amount = amountArray[random(2)];
-            const person = personArray[random(3)];
-            const theConjugatedVerbIs = verb?.positive[amount][person]
-            const pronoun = pronouns[amount][person]
-            verbsArray.push({ pronoun, theConjugatedVerbIs })
-        }
-        return verbsArray
-    }
-
-
     const selectedVerbs = ["být", "mít"]
 
-    const generatedQuestion = generateQuestions(selectedVerbs, numberOfQuestions)[currentQuestion];
-    console.log(generatedQuestion);
+
+    useEffect(() => {
+        const fetchVerbs = async () => {
+            try {
+                const { data, error } = await supabase.from('verbs').select()
+                if (error) throw error;
+                setVerbs(data)
+            } catch (error: any) { alert(error.message) }
+        }
+        fetchVerbs()
+    }, [])
+
+    console.log(verbs);
+
+    // const generateQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
+    //     //filters out all the selected verbs
+    //     const verbsToTest = selectedVerbs.map(selectedVerb => verbs?.find(verb => verb.infinitive.cz === selectedVerb))
+    //     //random function:
+    //     const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
+    //     let verbsArray = []
+    //     //selects number of conjucations randomly numberOfQuestions times
+    //     for (let i = 0; i < numberOfQuestions; i++) {
+    //         const verb = verbsToTest[random(selectedVerbs.length)]
+    //         const amountArray = ["singular", "plural"] as const
+    //         const personArray = ["first", "second", "third"] as const
+    //         const amount = amountArray[random(2)];
+    //         const person = personArray[random(3)];
+    //         const theConjugatedVerbIs = verb?.positive[amount][person]
+    //         const pronoun = pronouns[amount][person]
+    //         verbsArray.push({ pronoun, theConjugatedVerbIs })
+    //     }
+    //     console.log("THERANDOMVERBS ", verbsArray);
+
+    //     // setVerbsArrayState([...verbsArray]);
+    // }
+    // generateQuestions(selectedVerbs, numberOfQuestions)
+    // console.log(verbsArrayState)
 
 
     return (
@@ -87,15 +104,13 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
             <div className="">
                 {/* QUESTION */}
                 <div className="p-4 bg-duo-greenMiddle">
-                    <h3 className="text-white font-bold">
+                    <div className="text-white font-bold">
                         Translate:
-                        {generatedQuestion &&
-                            <div>
-                                {generatedQuestion.pronoun.en}
-                            </div>
-                        }
+                        {/* {generatedQuestion &&
+                            generatedQuestion.pronoun.en
+                        } */}
                         {/* {generatedQuestions[currentQuestion].pronoun.en} {generatedQuestions[currentQuestion].theConjugatedVerbIs?.en} */}
-                    </h3>
+                    </div>
                 </div>
                 {/* OPTIONS */}
                 <div className="h-20 bg-duo-macaw">
@@ -112,14 +127,14 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
     )
 }
 
-export async function getServerSideProps() {
-    let { data } = await supabase.from('verbs').select()
+// export async function getServerSideProps() {
+//     let { data } = await supabase.from('verbs').select()
 
-    return {
-        props: {
-            verbs: data
-        },
-    }
-}
+//     return {
+//         props: {
+//             verbs: data
+//         },
+//     }
+// }
 
 export default Conjugation
