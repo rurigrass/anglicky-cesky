@@ -89,12 +89,11 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
                 <div className="p-4 bg-duo-greenMiddle">
                     <h3 className="text-white font-bold">
                         Translate:
-                        {/* {generatedQuestion && */}
-                        {/* {generatedQuestion && <div>hi</div>} */}
-                        <div>
-                            {generatedQuestion.pronoun.en}
-                        </div>
-                        {/* } */}
+                        {generatedQuestion &&
+                            <div>
+                                {generatedQuestion.pronoun.en}
+                            </div>
+                        }
                         {/* {generatedQuestions[currentQuestion].pronoun.en} {generatedQuestions[currentQuestion].theConjugatedVerbIs?.en} */}
                     </h3>
                 </div>
@@ -108,8 +107,8 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
                 <div className="flex justify-center align-middle p-4">
                     <button className="button bg-duo-greenMiddle">Check</button>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 
