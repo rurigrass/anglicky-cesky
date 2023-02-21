@@ -46,7 +46,7 @@ let progress = 50
 const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
     const initialState: IinitialState = {
         currentQuestion: 0,
-        numberOfQuestions: 2,
+        numberOfQuestions: 1,
     }
     const [state, setState] = useState(initialState);
     let { currentQuestion, numberOfQuestions } = state;
