@@ -46,7 +46,7 @@ let progress = 50
 const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
     const initialState: IinitialState = {
         currentQuestion: 0,
-        numberOfQuestions: 1,
+        numberOfQuestions: 3,
     }
     const [state, setState] = useState(initialState);
     let { currentQuestion, numberOfQuestions } = state;
@@ -90,27 +90,26 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
             <div className="">
                 {/* QUESTION */}
                 <div className="p-4 bg-duo-greenMiddle">
-                    <div className="text-white font-bold">
-                        Translate:
-                        {generatedQuestion &&
-                            <div>{generatedQuestion.pronoun.en} {generatedQuestion.theConjugatedVerbIs?.en}</div>
-                        }
-                    </div>
+                    {generatedQuestion &&
+                        <div className="text-white font-bold">
+                            Translate: {generatedQuestion.pronoun.en} {generatedQuestion.theConjugatedVerbIs?.en}
+                        </div>
+                    }
                 </div>
                 {/* OPTIONS */}
                 <div className="h-20 bg-duo-macaw">
-                    <div>the answer is
-                        {/* {generatedQuestion &&
-                            <div>{generatedQuestion.pronoun.cz} {generatedQuestion.theConjugatedVerbIs?.cz}</div>
-                        } */}
-                    </div>
+                    {generatedQuestion &&
+                        <div className="text-white font-bold">
+                            The Answer is: {generatedQuestion.pronoun.cz} {generatedQuestion.theConjugatedVerbIs?.cz}
+                        </div>
+                    }
 
                 </div>
                 {/* <div className='flex flex-col space-y-2 bg-blue-600 rounded-xl mx-2 w-full sm:w-4/5 md:w-3/4 lg:w-1/2 py-9 px-3 md:px-9 bg-duo-hare border-b-4 border-b-duo-wolf'>
                     verbs
                 </div> */}
                 <div className="flex justify-center align-middle p-4">
-                    <button className="button bg-duo-greenMiddle">Check</button>
+                    <button className="button bg-duo-greenMiddle" onClick={() => setState({ ...state, currentQuestion: ++currentQuestion })}>Check</button>
                 </div>
             </div >
         </div >
