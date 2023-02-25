@@ -97,6 +97,15 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
                     }
                 </div>
                 {/* OPTIONS */}
+                <div className="h-20 bg-duo-humpback">
+                    {generatedQuestion &&
+                        <div className="text-white font-bold">
+                            options go here
+                        </div>
+                    }
+
+                </div>
+                {/* Answer pops up */}
                 <div className="h-20 bg-duo-macaw">
                     {generatedQuestion &&
                         <div className="text-white font-bold">
