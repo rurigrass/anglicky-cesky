@@ -40,7 +40,6 @@ const pronouns = {
     }
 }
 
-let progress = 50
 // let progress = Math.round(currentQuestion / numberOfQuestions * 100)
 
 const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
@@ -50,6 +49,7 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
     }
     const [state, setState] = useState(initialState);
     let { currentQuestion, numberOfQuestions } = state;
+    let progress = Math.round(currentQuestion / numberOfQuestions * 100)
 
     const generateQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
         //filters out all the selected verbs
