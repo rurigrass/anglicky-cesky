@@ -100,8 +100,8 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
                 <div className="h-20 bg-duo-humpback">
                     {generatedQuestion &&
                         <div className="text-white font-bold">
-                            <button className="button bg-duo-wolf text-white">{generatedQuestion.theConjugatedVerbIs?.cz}</button>
-                            options go here
+                            <button className="button bg-duo-wolf text-white">{generatedQuestion.pronoun.cz} {generatedQuestion.theConjugatedVerbIs?.cz}</button>
+                            <button className="button bg-duo-wolf text-white">{generatedQuestion.pronoun.cz} {generatedQuestion.theConjugatedVerbIs?.cz}</button>
                         </div>
                     }
 
