@@ -33,44 +33,32 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
     let { currentQuestion, numberOfQuestions, selectedVerbs } = state;
     let progress = Math.round(currentQuestion / numberOfQuestions * 100)
 
-    // OLD FUNCTION TO GET QUESTIONS RANDOMLY
-
-    // const generateQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
-    //     //filters out all the selected verbs
-    //     const verbsToTest = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb))
-    //     //random function:
-    //     const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
-    //     let verbsArray = []
-    //     //selects number of conjucations randomly numberOfQuestions times
-    //     for (let i = 0; i < numberOfQuestions; i++) {
-    //         const verb = verbsToTest[random(selectedVerbs.length)]
-    //         const amountArray = ["singular", "plural"] as const
-    //         const personArray = ["first", "second", "third"] as const
-    //         const amount = amountArray[random(2)];
-    //         const person = personArray[random(3)];
-    //         const theConjugatedVerbIs = verb?.positive[amount][person]
-    //         const pronoun = pronouns[amount][person]
-    //         verbsArray.push({ pronoun, theConjugatedVerbIs })
-    //     }
-    //     return verbsArray
-    // }
-
-    //make new method that doesn't repeat
-    // const generatedQuestion = generateQuestions(selectedVerbs, numberOfQuestions)[currentQuestion]
-    // console.log(generatedQuestion);
-
-    console.log(verbs);
-
     const sortQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
-        const verbsToTest = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb))
-        console.log(verbsToTest);
-        // console.log(verbs);
-
+        let counter = 0
+        let selectedVerbsArray;
+        let verbsArray: any[] = [];
+        if (typeof selectedVerbs === "string") { selectedVerbs = [selectedVerbs] };
+        selectedVerbsArray = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb));
+        const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
+        for (let i = 0; verbsArray.length < numberOfQuestions; i++) {
+            const verb = selectedVerbsArray[random(selectedVerbs.length)]
+            const amountArray = ["singular", "plural"] as const
+            const personArray = ["first", "second", "third"] as const
+            const amount = amountArray[random(2)];
+            const person = personArray[random(3)];
+            const pronoun = pronouns[amount][person]
+            const theConjugatedVerbIs = verb?.positive[amount][person]
+            const newQuestion = { pronoun, theConjugatedVerbIs };
+            const index = verbsArray.findIndex(x => x.theConjugatedVerbIs.cz === theConjugatedVerbIs?.cz)
+            index === -1 ? verbsArray.push(newQuestion) : console.log("This item already exists");
+        }
+        // console.log("The verbs ", selectedVerbs);
+        console.log("the randomly selected questions ", verbsArray);
 
     }
 
 
-    console.log(sortQuestions(selectedVerbs, numberOfQuestions));
+    sortQuestions(selectedVerbs, numberOfQuestions)
 
 
 
