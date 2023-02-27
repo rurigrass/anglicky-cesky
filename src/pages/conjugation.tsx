@@ -1,9 +1,10 @@
 import Header from "@/components/Header"
 import ProgressBar from "@/components/ProgressBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IVerb } from "typings";
 import { supabase } from "../../lib/supabaseClient"
 import { useRouter } from "next/router";
+import pronouns from "lib/pronouns";
 
 interface IinitialState {
     currentQuestion: number,
@@ -16,44 +17,12 @@ interface IgameSettings {
     selectedVerbs: string[]
 }
 
-const pronouns = {
-    singular: {
-        first: {
-            en: "I",
-            cz: "ja"
-        },
-        second: {
-            en: "you",
-            cz: "ty"
-        },
-        third: {
-            en: "he",
-            cz: "on"
-        }
-    },
-    plural: {
-        first: {
-            en: "we",
-            cz: "my"
-        },
-        second: {
-            en: "you",
-            cz: "vy"
-        },
-        third: {
-            en: "they",
-            cz: "oni"
-        }
-    }
-}
 
 // let progress = Math.round(currentQuestion / numberOfQuestions * 100)
 
 const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
     const router = useRouter();
     const gameSettings = router.query as unknown as IgameSettings;
-    // const selectedVerbs = ["být"]
-    console.log("SLUG ", gameSettings);
 
     const initialState: IinitialState = {
         currentQuestion: 0,
@@ -64,39 +33,43 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
     let { currentQuestion, numberOfQuestions, selectedVerbs } = state;
     let progress = Math.round(currentQuestion / numberOfQuestions * 100)
 
-    const generateQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
-        //filters out all the selected verbs
-        const verbsToTest = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb))
-        //random function:
-        const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
-        let verbsArray = []
-        //selects number of conjucations randomly numberOfQuestions times
-        for (let i = 0; i < numberOfQuestions; i++) {
-            const verb = verbsToTest[random(selectedVerbs.length)]
-            const amountArray = ["singular", "plural"] as const
-            const personArray = ["first", "second", "third"] as const
-            const amount = amountArray[random(2)];
-            const person = personArray[random(3)];
-            const theConjugatedVerbIs = verb?.positive[amount][person]
-            const pronoun = pronouns[amount][person]
-            verbsArray.push({ pronoun, theConjugatedVerbIs })
-        }
-        return verbsArray
-    }
+    // OLD FUNCTION TO GET QUESTIONS RANDOMLY
+
+    // const generateQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
+    //     //filters out all the selected verbs
+    //     const verbsToTest = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb))
+    //     //random function:
+    //     const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
+    //     let verbsArray = []
+    //     //selects number of conjucations randomly numberOfQuestions times
+    //     for (let i = 0; i < numberOfQuestions; i++) {
+    //         const verb = verbsToTest[random(selectedVerbs.length)]
+    //         const amountArray = ["singular", "plural"] as const
+    //         const personArray = ["first", "second", "third"] as const
+    //         const amount = amountArray[random(2)];
+    //         const person = personArray[random(3)];
+    //         const theConjugatedVerbIs = verb?.positive[amount][person]
+    //         const pronoun = pronouns[amount][person]
+    //         verbsArray.push({ pronoun, theConjugatedVerbIs })
+    //     }
+    //     return verbsArray
+    // }
 
     //make new method that doesn't repeat
+    // const generatedQuestion = generateQuestions(selectedVerbs, numberOfQuestions)[currentQuestion]
+    // console.log(generatedQuestion);
+
+    console.log(verbs);
+
     const sortQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
-        // console.log(selectedVerbs);
+        const verbsToTest = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb))
+        console.log(verbsToTest);
         // console.log(verbs);
 
 
     }
-    //above 
 
 
-    const generatedQuestion = generateQuestions(selectedVerbs, numberOfQuestions)[currentQuestion]
-
-    console.log(generatedQuestion);
     console.log(sortQuestions(selectedVerbs, numberOfQuestions));
 
 
@@ -111,29 +84,29 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
             <div className="">
                 {/* QUESTION */}
                 <div className="p-4 bg-duo-greenMiddle">
-                    {generatedQuestion &&
+                    {/* {generatedQuestion &&
                         <div className="text-white font-bold">
                             Translate: {generatedQuestion.pronoun.en} {generatedQuestion.theConjugatedVerbIs?.en}
                         </div>
-                    }
+                    } */}
                 </div>
                 {/* OPTIONS */}
                 <div className="h-20 bg-duo-humpback">
-                    {generatedQuestion &&
+                    {/* {generatedQuestion &&
                         <div className="text-white font-bold">
                             <button className="button bg-duo-wolf text-white">{generatedQuestion.pronoun.cz} {generatedQuestion.theConjugatedVerbIs?.cz}</button>
                             <button className="button bg-duo-wolf text-white">{generatedQuestion.pronoun.cz} {generatedQuestion.theConjugatedVerbIs?.cz}</button>
                         </div>
-                    }
+                    } */}
 
                 </div>
                 {/* Answer pops up */}
                 <div className="h-20 bg-duo-macaw">
-                    {generatedQuestion &&
+                    {/* {generatedQuestion &&
                         <div className="text-white font-bold">
                             The Answer is: {generatedQuestion.pronoun.cz} {generatedQuestion.theConjugatedVerbIs?.cz}
                         </div>
-                    }
+                    } */}
 
                 </div>
                 {/* <div className='flex flex-col space-y-2 bg-blue-600 rounded-xl mx-2 w-full sm:w-4/5 md:w-3/4 lg:w-1/2 py-9 px-3 md:px-9 bg-duo-hare border-b-4 border-b-duo-wolf'>
