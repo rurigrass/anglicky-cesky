@@ -12,7 +12,7 @@ const Home = () => {
 
   const gameSettings = {
     numberOfQuestions: 5,
-    selectedVerbs: ["být", "myt"]
+    selectedVerbs: ["být", "mít"]
   }
 
   return (

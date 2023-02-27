@@ -1,30 +1,30 @@
 const pronouns = {
   singular: {
     first: {
-      en: "I",
-      cz: "ja"
+      cz: "ja",
+      en: "I"
     },
     second: {
-      en: "you",
-      cz: "ty"
+      cz: "ty",
+      en: "you"
     },
     third: {
-      en: "he",
-      cz: "on"
+      cz: "on",
+      en: "he"
     }
   },
   plural: {
     first: {
-      en: "we",
-      cz: "my"
+      cz: "my",
+      en: "we"
     },
     second: {
-      en: "you",
-      cz: "vy"
+      cz: "vy",
+      en: "you"
     },
     third: {
-      en: "they",
-      cz: "oni"
+      cz: "oni",
+      en: "they"
     }
   }
 }
