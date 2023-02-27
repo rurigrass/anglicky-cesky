@@ -34,7 +34,6 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
     let progress = Math.round(currentQuestion / numberOfQuestions * 100)
 
     const sortQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
-        let counter = 0
         let selectedVerbsArray;
         let verbsArray: any[] = [];
         if (typeof selectedVerbs === "string") { selectedVerbs = [selectedVerbs] };
