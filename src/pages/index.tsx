@@ -3,11 +3,21 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import Header from '@/components/Header'
 import Link from 'next/link'
+import Router from "next/router"
 import { useState } from 'react'
 
 const Home = () => {
   const [showVocabGame, setShowVocabGame] = useState<Boolean>(false)
   const [showConjugationGame, setShowConjugationGame] = useState<Boolean>(false)
+
+  const sendProps = (long: number) => {
+    Router.push({
+      pathname: "conjugation",
+      query: {
+        long
+      }
+    })
+  }
 
   return (
     <>
@@ -33,7 +43,7 @@ const Home = () => {
           {showConjugationGame &&
             <div className='flex justify-center space-y-2 py-2 bg-duo-wolf rounded-xl border-t-4 border-b-duo-eel'>
               <button className='button bg-duo-humpback  text-white hover:bg-duo-macaw'>
-                <Link href="/conjugation">Start Game </Link>
+                <a onClick={() => sendProps(2)}>Start Game </a>
               </button>
             </div>
           }
