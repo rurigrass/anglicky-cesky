@@ -11,7 +11,8 @@ const Home = () => {
   const [showConjugationGame, setShowConjugationGame] = useState<Boolean>(false)
 
   const gameSettings = {
-    length: 1
+    numberOfQuestions: 5,
+    selectedVerbs: ["být", "myt"]
   }
 
   return (
