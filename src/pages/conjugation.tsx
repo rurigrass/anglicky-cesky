@@ -45,9 +45,9 @@ const pronouns = {
 
 const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
     const router = useRouter();
-    const { query: { long } } = router
+    const gameSettings = router.query
     const selectedVerbs = ["být"]
-    console.log("SLUG ", typeof long);
+    console.log("SLUG ", typeof gameSettings.length);
 
     const initialState: IinitialState = {
         currentQuestion: 0,
