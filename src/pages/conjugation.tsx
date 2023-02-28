@@ -42,20 +42,22 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
     // const [questions, setQuestions] = useState<IverbQuestion[]>([])
     let { currentQuestion, numberOfQuestions, selectedVerbs } = state;
     let progress = Math.round(currentQuestion / numberOfQuestions * 100)
-    let questions: IverbQuestion[] = []
+    let questions: any[] = []
 
     const sortQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
+        let selectedVerbsArray;
+        // let verbsArray: any[] = [];
         if (typeof selectedVerbs === "string") { selectedVerbs = [selectedVerbs] };
-        let selectedVerbsArray = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb));
+        selectedVerbsArray = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb));
         const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
         for (let i = 0; questions.length < numberOfQuestions; i++) {
-            const verb: IVerb = selectedVerbsArray[random(selectedVerbs.length)]
+            const verb = selectedVerbsArray[random(selectedVerbs.length)]
             const amountArray = ["singular", "plural"] as const
             const personArray = ["first", "second", "third"] as const
             const amount = amountArray[random(2)];
             const person = personArray[random(3)];
             const pronoun = pronouns[amount][person]
-            const theConjugatedVerbIs = verb.positive[amount][person]
+            const theConjugatedVerbIs = verb?.positive[amount][person]
             const newQuestion: IverbQuestion = { pronoun, theConjugatedVerbIs };
             const index = questions.findIndex(x => x.theConjugatedVerbIs.cz === theConjugatedVerbIs?.cz)
             index === -1 ? questions.push(newQuestion) : null;
@@ -78,11 +80,11 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
             <div className="">
                 {/* QUESTION */}
                 <div className="p-4 bg-duo-greenMiddle">
-                    {/* {questions &&
+                    {questions &&
                         <div className="text-white font-bold">
                             Translate: {question.pronoun.en} {question.theConjugatedVerbIs.en}
                         </div>
-                    } */}
+                    }
                 </div>
                 {/* OPTIONS */}
                 <div className="h-20 bg-duo-humpback">
