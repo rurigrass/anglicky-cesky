@@ -1,6 +1,6 @@
 import Header from "@/components/Header"
 import ProgressBar from "@/components/ProgressBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IVerb } from "typings";
 import { supabase } from "../../lib/supabaseClient"
 import { useRouter } from "next/router";
@@ -10,7 +10,7 @@ interface IinitialState {
     currentQuestion: number,
     numberOfQuestions: number,
     selectedVerbs: string[],
-    // questions: IverbQuestion[] | null
+    questions: IverbQuestion[]
 }
 
 interface IverbQuestion {
@@ -37,40 +37,40 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
         currentQuestion: 0,
         numberOfQuestions: gameSettings.numberOfQuestions,
         selectedVerbs: gameSettings.selectedVerbs,
+        questions: []
     }
     const [state, setState] = useState(initialState);
     // const [questions, setQuestions] = useState<IverbQuestion[]>([])
-    let { currentQuestion, numberOfQuestions, selectedVerbs } = state;
+    let { currentQuestion, numberOfQuestions, selectedVerbs, questions } = state;
     let progress = Math.round(currentQuestion / numberOfQuestions * 100)
-    let questions: IverbQuestion[] = []
 
-    const sortQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
-        let selectedVerbsArray;
-        let verbsArray: any[] = [];
-        if (typeof selectedVerbs === "string") { selectedVerbs = [selectedVerbs] };
-        selectedVerbsArray = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb));
-        const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
-        for (let i = 0; verbsArray.length < numberOfQuestions; i++) {
-            const verb = selectedVerbsArray[random(selectedVerbs.length)]
-            const amountArray = ["singular", "plural"] as const
-            const personArray = ["first", "second", "third"] as const
-            const amount = amountArray[random(2)];
-            const person = personArray[random(3)];
-            const pronoun = pronouns[amount][person]
-            const theConjugatedVerbIs = verb?.positive[amount][person]
-            const newQuestion = { pronoun, theConjugatedVerbIs };
-            const index = verbsArray.findIndex(x => x.theConjugatedVerbIs.cz === theConjugatedVerbIs?.cz)
-            index === -1 ? verbsArray.push(newQuestion) : null;
+    useEffect(() => {
+        const sortQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
+            let selectedVerbsArray;
+            let verbsArray: any[] = [];
+            if (typeof selectedVerbs === "string") { selectedVerbs = [selectedVerbs] };
+            selectedVerbsArray = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb));
+            const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
+            for (let i = 0; verbsArray.length < numberOfQuestions; i++) {
+                const verb = selectedVerbsArray[random(selectedVerbs.length)]
+                const amountArray = ["singular", "plural"] as const
+                const personArray = ["first", "second", "third"] as const
+                const amount = amountArray[random(2)];
+                const person = personArray[random(3)];
+                const pronoun = pronouns[amount][person]
+                const theConjugatedVerbIs = verb?.positive[amount][person]
+                const newQuestion = { pronoun, theConjugatedVerbIs };
+                const index = verbsArray.findIndex(x => x.theConjugatedVerbIs.cz === theConjugatedVerbIs?.cz)
+                index === -1 ? verbsArray.push(newQuestion) : console.log("This item already exists");
+            }
+            setState({ ...state, questions: verbsArray })
         }
-        questions = verbsArray
-    }
+        sortQuestions(selectedVerbs, numberOfQuestions)
+    }, [])
+
+    console.log(questions ? questions[currentQuestion] : "nothing");
 
 
-    sortQuestions(selectedVerbs, numberOfQuestions)
-
-    const question = questions[currentQuestion];
-
-    console.log(question.pronoun.cz);
 
     return (
         <div className="flex flex-col h-screen bg-duo-eel">
@@ -81,11 +81,11 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
             <div className="">
                 {/* QUESTION */}
                 <div className="p-4 bg-duo-greenMiddle">
-                    {/* {questions &&
+                    {questions.length > 0 &&
                         <div className="text-white font-bold">
-                            Translate: {question.pronoun.en} {question.theConjugatedVerbIs.en}
+                            Translate: {questions[currentQuestion].pronoun.en} {questions[currentQuestion].theConjugatedVerbIs.en}
                         </div>
-                    } */}
+                    }
                 </div>
                 {/* OPTIONS */}
                 <div className="h-20 bg-duo-humpback">
