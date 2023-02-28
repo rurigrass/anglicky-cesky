@@ -3,26 +3,26 @@ export interface IVerb {
   infinitive: { cz: string, en: string },
   positive: {
     plural: {
-      first: { en: string, cz: string }
-      second: { en: string, cz: string }
-      third: { en: string, cz: string }
+      first: { cz: string, en: string }
+      second: { cz: string, en: string }
+      third: { cz: string, en: string }
     }
     singular: {
-      first: { en: string, cz: string }
-      second: { en: string, cz: string }
-      third: { en: string, cz: string }
+      first: { cz: string, en: string }
+      second: { cz: string, en: string }
+      third: { cz: string, en: string }
     }
   },
   negative?: {
     plural: {
-      first: { en: string, cz: string }
-      second: { en: string, cz: string }
-      third: { en: string, cz: string }
+      first: { cz: string, en: string }
+      second: { cz: string, en: string }
+      third: { cz: string, en: string }
     }
     singular: {
-      first: { en: string, cz: string }
-      second: { en: string, cz: string }
-      third: { en: string, cz: string }
+      first: { cz: string, en: string }
+      second: { cz: string, en: string }
+      third: { cz: string, en: string }
     }
   }
 }
