@@ -58,7 +58,7 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
             const person = personArray[random(3)];
             const pronoun = pronouns[amount][person]
             const theConjugatedVerbIs = verb?.positive[amount][person]
-            const newQuestion: IverbQuestion = { pronoun, theConjugatedVerbIs };
+            const newQuestion = { pronoun, theConjugatedVerbIs };
             const index = questions.findIndex(x => x.theConjugatedVerbIs.cz === theConjugatedVerbIs?.cz)
             index === -1 ? questions.push(newQuestion) : null;
         }
