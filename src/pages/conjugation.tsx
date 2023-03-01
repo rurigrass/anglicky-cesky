@@ -70,6 +70,11 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
 
     console.log(questions ? questions[currentQuestion] : "nothing");
 
+    function getMultipleRandom(arr: IverbQuestion[], num: number) {
+        const shuffled = [...arr].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, num);
+    }
+
 
 
     return (
@@ -89,31 +94,30 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
                 </div>
                 {/* OPTIONS */}
                 <div className="h-20 bg-duo-humpback">
-                    {/* {generatedQuestion &&
-                        <div className="text-white font-bold">
-                            <button className="button bg-duo-wolf text-white">{generatedQuestion.pronoun.cz} {generatedQuestion.theConjugatedVerbIs?.cz}</button>
-                            <button className="button bg-duo-wolf text-white">{generatedQuestion.pronoun.cz} {generatedQuestion.theConjugatedVerbIs?.cz}</button>
-                        </div>
-                    } */}
-
+                    {questions.length > 0 &&
+                        getMultipleRandom(questions, 5).map((question, i) =>
+                            <div key={i}>{question.theConjugatedVerbIs.cz}</div>
+                        )
+                    }
                 </div>
-                {/* Answer pops up */}
-                <div className="h-20 bg-duo-macaw">
-                    {/* {generatedQuestion &&
-                        <div className="text-white font-bold">
-                            The Answer is: {generatedQuestion.pronoun.cz} {generatedQuestion.theConjugatedVerbIs?.cz}
-                        </div>
-                    } */}
+            </div>
+            {/* Answer pops up */}
+            <div className="h-20 bg-duo-eel hidden">
+                {/* ONLY SHOW ONCE ANSWER IS SUBMITTED */}
+                {questions.length > 0 &&
+                    <div className="text-white font-bold">
+                        The Answer is: {questions[currentQuestion].pronoun.cz} {questions[currentQuestion].theConjugatedVerbIs.cz}
+                    </div>
+                }
 
-                </div>
-                {/* <div className='flex flex-col space-y-2 bg-blue-600 rounded-xl mx-2 w-full sm:w-4/5 md:w-3/4 lg:w-1/2 py-9 px-3 md:px-9 bg-duo-hare border-b-4 border-b-duo-wolf'>
+            </div>
+            {/* <div className='flex flex-col space-y-2 bg-blue-600 rounded-xl mx-2 w-full sm:w-4/5 md:w-3/4 lg:w-1/2 py-9 px-3 md:px-9 bg-duo-hare border-b-4 border-b-duo-wolf'>
                     verbs
                 </div> */}
-                <div className="flex justify-center align-middle p-4">
-                    <button className="button bg-duo-greenMiddle" onClick={() => setState({ ...state, currentQuestion: ++currentQuestion })}>Check</button>
-                </div>
-            </div >
-        </div >
+            <div className="flex justify-center align-middle p-4">
+                <button className="button bg-duo-greenMiddle" onClick={() => setState({ ...state, currentQuestion: ++currentQuestion })}>Check</button>
+            </div>
+        </div>
     )
 }
 
