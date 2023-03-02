@@ -70,14 +70,14 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
     console.log(questions[currentQuestion].theConjugatedVerbIs.cz);
 
     return (
-        <div className="flex flex-col h-screen bg-duo-eel">
+        <div className="flex flex-col min-h-screen items-stretch bg-duo-eel">
             <Header />
             <div className="py-2 bg-duo-eel">
                 <ProgressBar progress={progress} />
             </div>
             <div className="">
                 {/* QUESTION */}
-                <div className="p-4 bg-duo-greenMiddle">
+                <div className=" p-4 bg-duo-greenMiddle">
                     {questions.length > 0 &&
                         <div className="text-white font-bold">
                             Translate: {questions[currentQuestion].pronoun.en} {questions[currentQuestion].theConjugatedVerbIs.en}
@@ -86,16 +86,13 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
                 </div>
                 <div className="h-20 bg-duo-eel text-white font-bold flex items-center ml-5">
                     {questions.length > 0 &&
-                        <>
-                            <div>{capitalize(questions[currentQuestion].pronoun.cz)}</div>
-                            <div></div>
-                        </>
+                        <div className="flex items-center">{capitalize(questions[currentQuestion].pronoun.cz)} <span className="p-2 px-4 rounded-lg border-b-4 bg-black border-duo-wolf ml-2">{` ${selectedAnswer}`}</span></div>
                     }
                 </div>
                 <div className="h-20 bg-duo-humpback flex justify-center items-center space-x-2">
                     {questions.length > 0 &&
                         possibleAnswers.map((question, i) =>
-                            <button key={i} className="button bg-black text-white"
+                            <button key={i} className={`button bg-black text-white ${question.theConjugatedVerbIs.cz === selectedAnswer && "bg-duo-eel"}`}
                                 onClick={() => setState({ ...state, selectedAnswer: question.theConjugatedVerbIs.cz })}
                             >{question.theConjugatedVerbIs.cz}</button>
                         )
