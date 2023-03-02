@@ -126,7 +126,7 @@ export async function getServerSideProps({ query }: { query: any }) {
 
     let numberOfQuestions = query.numberOfQuestions
     let selectedVerbs = query.selectedVerbs
-    let selectedVerbsArray: string[];
+    let selectedVerbsArray: IVerb[];
     let verbsArray: any[] = [];
     if (typeof selectedVerbs === "string") { selectedVerbs = [selectedVerbs] };
     selectedVerbsArray = selectedVerbs.map((selectedVerb: string) => data.find((verb: { infinitive: { cz: string; }; }) => verb.infinitive.cz === selectedVerb));
