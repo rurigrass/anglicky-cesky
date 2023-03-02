@@ -10,7 +10,8 @@ interface IinitialState {
     currentQuestion: number,
     numberOfQuestions: number,
     selectedVerbs: string[],
-    questions: IverbQuestion[]
+    questions: IverbQuestion[],
+    selectedAnswer: string
 }
 
 interface IverbQuestion {
@@ -37,7 +38,8 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
         currentQuestion: 0,
         numberOfQuestions: gameSettings.numberOfQuestions,
         selectedVerbs: gameSettings.selectedVerbs,
-        questions: []
+        questions: [],
+        selectedAnswer: ""
     }
     const [state, setState] = useState(initialState);
     // const [questions, setQuestions] = useState<IverbQuestion[]>([])
@@ -70,10 +72,15 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
 
     console.log(questions ? questions[currentQuestion] : "nothing");
 
-    function getMultipleRandom(arr: IverbQuestion[], num: number) {
+    function getMultipleRandom(arr: IverbQuestion[], num: number, answer: IverbQuestion) {
         const shuffled = [...arr].sort(() => 0.5 - Math.random());
         return shuffled.slice(0, num);
+        //you may get same option twice sometimes.
     }
+
+    const capitalize = (s: string) => s && s[0].toUpperCase() + s.slice(1)
+
+    //
 
 
 
@@ -92,9 +99,13 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
                         </div>
                     }
                 </div>
+                <div className="h-20 bg-duo-eel text-white font-bold flex items-center ml-5">
+                    <div>{capitalize(questions[currentQuestion].pronoun.cz)}</div>
+                    <div></div>
+                </div>
                 <div className="h-20 bg-duo-humpback flex justify-center items-center space-x-2">
                     {questions.length > 0 &&
-                        getMultipleRandom(questions, 5).map((question, i) =>
+                        getMultipleRandom(questions, 5, questions[currentQuestion]).map((question, i) =>
                             <button className="button bg-black text-white " key={i}>{question.theConjugatedVerbIs.cz}</button>
                         )
                     }
@@ -108,11 +119,7 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
                         The Answer is: {questions[currentQuestion].pronoun.cz} {questions[currentQuestion].theConjugatedVerbIs.cz}
                     </div>
                 }
-
             </div>
-            {/* <div className='flex flex-col space-y-2 bg-blue-600 rounded-xl mx-2 w-full sm:w-4/5 md:w-3/4 lg:w-1/2 py-9 px-3 md:px-9 bg-duo-hare border-b-4 border-b-duo-wolf'>
-                    verbs
-                </div> */}
             <div className="flex justify-center align-middle p-4">
                 <button className="button bg-duo-greenMiddle" onClick={() => setState({ ...state, currentQuestion: ++currentQuestion })}>Check</button>
             </div>
