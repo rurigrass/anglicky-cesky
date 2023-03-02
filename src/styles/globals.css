@@ -4,6 +4,6 @@
 
 @layer components {
     .button { 
-        @apply transition ease-in-out p-2 px-4 rounded-lg border-b-4 border-black hover:border-b-2 hover:mt-0.5 shadow-lg hover:shadow-sm font-medium
+        @apply transition ease-in-out p-2 px-4 rounded-lg border-b-4 border-duo-wolf hover:border-b-2 hover:mt-0.5 shadow-lg hover:shadow-sm font-medium
     }
 }

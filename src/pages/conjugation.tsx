@@ -92,11 +92,10 @@ const Conjugation = ({ verbs }: { verbs: IVerb[] }) => {
                         </div>
                     }
                 </div>
-                {/* OPTIONS */}
-                <div className="h-20 bg-duo-humpback">
+                <div className="h-20 bg-duo-humpback flex justify-center items-center space-x-2">
                     {questions.length > 0 &&
                         getMultipleRandom(questions, 5).map((question, i) =>
-                            <div key={i}>{question.theConjugatedVerbIs.cz}</div>
+                            <button className="button bg-black text-white " key={i}>{question.theConjugatedVerbIs.cz}</button>
                         )
                     }
                 </div>
