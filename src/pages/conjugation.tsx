@@ -51,43 +51,21 @@ const Conjugation = ({ verbs, query, verbsArray }: { verbs: IVerb[], query: any,
     let { currentQuestion, numberOfQuestions, selectedVerbs, questions, possibleAnswers, selectedAnswer } = state;
     let progress = Math.round(currentQuestion / numberOfQuestions * 100)
 
-    // useEffect(() => {
-    //     const sortQuestions = (selectedVerbs: string[], numberOfQuestions: number) => {
-    //         let selectedVerbsArray;
-    //         let verbsArray: any[] = [];
-    //         if (typeof selectedVerbs === "string") { selectedVerbs = [selectedVerbs] };
-    //         selectedVerbsArray = selectedVerbs.map(selectedVerb => verbs.find(verb => verb.infinitive.cz === selectedVerb));
-    //         const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
-    //         for (let i = 0; verbsArray.length < numberOfQuestions; i++) {
-    //             const verb = selectedVerbsArray[random(selectedVerbs.length)]
-    //             const amountArray = ["singular", "plural"] as const
-    //             const personArray = ["first", "second", "third"] as const
-    //             const amount = amountArray[random(2)];
-    //             const person = personArray[random(3)];
-    //             const pronoun = pronouns[amount][person]
-    //             const theConjugatedVerbIs = verb?.positive[amount][person]
-    //             const newQuestion = { pronoun, theConjugatedVerbIs };
-    //             const index = verbsArray.findIndex(x => x.theConjugatedVerbIs.cz === theConjugatedVerbIs?.cz)
-    //             index === -1 ? verbsArray.push(newQuestion) : console.log("This item already exists");
-    //         }
-    //         setState({ ...state, questions: verbsArray })
-    //     }
-    //     sortQuestions(selectedVerbs, numberOfQuestions)
-    // }, [])
+    useEffect(() => {
+        const getMultipleRandom = (arr: IverbQuestion[], num: number, answer: IverbQuestion) => {
+            const shuffled = [...arr, answer].sort(() => 0.5 - Math.random());
+            const possibleAnswers = shuffled.slice(0, num);
+            //you may get same option twice sometimes.
+            console.log(possibleAnswers);
+            setState({ ...state, possibleAnswers })
+            //FIX THIS
+        };
+        getMultipleRandom(questions, 5, questions[currentQuestion])
+    }, [currentQuestion])
 
-    // const getMultipleRandom = (arr: IverbQuestion[], num: number, answer: IverbQuestion) => {
-    //     const shuffled = [...arr, answer].sort(() => 0.5 - Math.random());
-    //     const possibleAnswers = shuffled.slice(0, num);
-    //     //you may get same option twice sometimes.
-    //     console.log(possibleAnswers);
-
-    //     setState({ ...state, possibleAnswers })
-    //     //FIX THIS
-    // };
-
-    // getMultipleRandom(questions, 5, questions[currentQuestion])
     const capitalize = (s: string) => s && s[0].toUpperCase() + s.slice(1)
 
+    console.log(questions[currentQuestion].theConjugatedVerbIs.cz);
 
     return (
         <div className="flex flex-col h-screen bg-duo-eel">
