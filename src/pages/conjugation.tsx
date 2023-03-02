@@ -32,17 +32,17 @@ interface IgameSettings {
 }
 
 
-const Conjugation = ({ verbs, query, verbsArray }: { verbs: IVerb[], query: any, verbsArray: any }) => {
+const Conjugation = ({ verbs, query }: { verbs: IVerb[], query: any }) => {
     const router = useRouter();
     const gameSettings = router.query as unknown as IgameSettings;
-    console.log("QUERY ", verbsArray);
+    console.log("QUERY ", verbs);
 
 
     const initialState: IinitialState = {
         currentQuestion: 0,
         numberOfQuestions: gameSettings.numberOfQuestions,
         selectedVerbs: gameSettings.selectedVerbs,
-        questions: verbsArray,
+        questions: verbs,
         possibleAnswers: [],
         selectedAnswer: ""
     }
@@ -142,13 +142,10 @@ export async function getServerSideProps({ query }: { query: any }) {
         index === -1 ? verbsArray.push(newQuestion) : console.log("This item already exists");
     }
 
-    console.log(query);
-
-
     return {
         props: {
-            verbs: data,
-            query, verbsArray
+            verbs: verbsArray,
+            query,
         },
     }
 }
