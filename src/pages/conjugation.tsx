@@ -12,7 +12,8 @@ interface IinitialState {
     selectedVerbs: string[],
     questions: IverbQuestion[],
     possibleAnswers: IverbQuestion[],
-    selectedAnswer: string
+    selectedAnswer: string,
+    selectedAnswers: boolean[]
 }
 
 interface IverbQuestion {
@@ -35,7 +36,7 @@ interface IgameSettings {
 const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) => {
     const router = useRouter();
     const gameSettings = router.query as unknown as IgameSettings;
-    console.log("QUERY ", verbs);
+    // console.log("QUERY ", verbs);
 
 
     const initialState: IinitialState = {
@@ -44,13 +45,14 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
         selectedVerbs: gameSettings.selectedVerbs,
         questions: verbs,
         possibleAnswers: [],
-        selectedAnswer: ""
+        selectedAnswer: "",
+        selectedAnswers: []
     }
 
     const [state, setState] = useState(initialState);
-    let { currentQuestion, numberOfQuestions, selectedVerbs, questions, possibleAnswers, selectedAnswer } = state;
+    let { currentQuestion, numberOfQuestions, selectedVerbs, questions, possibleAnswers, selectedAnswer, selectedAnswers } = state;
+    const [showAnswer, setShowAnswer] = useState<boolean>(false)
 
-    console.log(selectedVerbs);
     let progress = Math.round(currentQuestion / numberOfQuestions * 100)
 
     useEffect(() => {
@@ -58,7 +60,7 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
             const shuffled = [...arr, answer].sort(() => 0.5 - Math.random());
             const possibleAnswers = shuffled.slice(0, num);
             //you may get same option twice sometimes.
-            console.log(possibleAnswers);
+            // console.log(possibleAnswers);
             setState({ ...state, possibleAnswers })
             //FIX THIS
         };
@@ -67,7 +69,31 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
 
     const capitalize = (s: string) => s && s[0].toUpperCase() + s.slice(1)
 
-    console.log(questions[currentQuestion].theConjugatedVerbIs.cz);
+    const isAnswerCorrect = (answer: boolean) => {
+        return (
+            <>{answer ? (
+                <h2 className='text-nice-greenMiddle text-4xl font-bold'>
+                    Correct!
+                </h2>
+            ) : (
+                <h2 className='text-nice-red text-4xl font-bold'>
+                    Incorrect
+                </h2>)}</>
+        )
+    }
+
+    const checkAnswer = () => {
+        setShowAnswer(true)
+        setState({ ...state, selectedAnswers: [...state.selectedAnswers, state.selectedAnswer === questions[currentQuestion].theConjugatedVerbIs.cz] })
+    }
+
+    const nextQuestion = () => {
+        setShowAnswer(false)
+        setState({ ...state, currentQuestion: ++currentQuestion, })
+    }
+
+    console.log(selectedAnswers);
+
 
     return (
         <div className="flex flex-col min-h-screen items-stretch bg-duo-eel">
@@ -75,45 +101,56 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
             <div className="py-2 bg-duo-eel">
                 <ProgressBar progress={progress} />
             </div>
-            <div className="">
-                {/* QUESTION */}
-                <div className=" p-4 bg-duo-greenMiddle">
+            {!showAnswer ?
+                <div className="">
+                    {/* QUESTION */}
+                    <div className=" p-4 bg-duo-greenMiddle">
+                        {questions.length > 0 &&
+                            <div className="text-white font-bold">
+                                Translate: {questions[currentQuestion].pronoun.en} {questions[currentQuestion].theConjugatedVerbIs.en}
+                            </div>
+                        }
+                    </div>
+                    <div className="h-20 bg-duo-eel text-white font-bold flex items-center ml-5">
+                        {questions.length > 0 &&
+                            <div className="flex items-center">{capitalize(questions[currentQuestion].pronoun.cz)}
+                                {selectedAnswer !== "" &&
+                                    <span className="p-2 px-4 rounded-lg border-b-4 bg-black border-duo-wolf ml-2">{` ${selectedAnswer}`}</span>
+                                }
+                            </div>
+                        }
+                    </div>
+                    <div className="h-20 bg-duo-humpback flex justify-center items-center space-x-2">
+                        {questions.length > 0 &&
+                            possibleAnswers.map((question, i) =>
+                                <button key={i} className={`button bg-black text-white ${question.theConjugatedVerbIs.cz === selectedAnswer && "bg-duo-eel"}`}
+                                    onClick={() => setState({ ...state, selectedAnswer: question.theConjugatedVerbIs.cz })}
+                                >{question.theConjugatedVerbIs.cz}</button>
+                            )
+                        }
+                    </div>
+
+                </div>
+                :
+                <div className="h-20 bg-duo-eel hidden">
+                    {/* ONLY SHOW ONCE ANSWER IS SUBMITTED */}
                     {questions.length > 0 &&
                         <div className="text-white font-bold">
-                            Translate: {questions[currentQuestion].pronoun.en} {questions[currentQuestion].theConjugatedVerbIs.en}
+                            The Answer is: {questions[currentQuestion].pronoun.cz} {questions[currentQuestion].theConjugatedVerbIs.cz}
                         </div>
                     }
                 </div>
-                <div className="h-20 bg-duo-eel text-white font-bold flex items-center ml-5">
-                    {questions.length > 0 &&
-                        <div className="flex items-center">{capitalize(questions[currentQuestion].pronoun.cz)} <span className="p-2 px-4 rounded-lg border-b-4 bg-black border-duo-wolf ml-2">{` ${selectedAnswer}`}</span></div>
-                    }
+            }
+            {!showAnswer ?
+                <div className="flex justify-center align-middle p-4">
+                    <button className="button bg-duo-greenMiddle" onClick={() => checkAnswer()} > Check</button>
                 </div>
-                <div className="h-20 bg-duo-humpback flex justify-center items-center space-x-2">
-                    {questions.length > 0 &&
-                        possibleAnswers.map((question, i) =>
-                            <button key={i} className={`button bg-black text-white ${question.theConjugatedVerbIs.cz === selectedAnswer && "bg-duo-eel"}`}
-                                onClick={() => setState({ ...state, selectedAnswer: question.theConjugatedVerbIs.cz })}
-                            >{question.theConjugatedVerbIs.cz}</button>
-                        )
-                    }
+                :
+                <div className="flex justify-center align-middle p-4">
+                    <button className="button bg-duo-greenMiddle" onClick={() => nextQuestion()}>Next</button>
                 </div>
-            </div>
-            {/* Answer pops up */}
-            <div className="h-20 bg-duo-eel hidden">
-                {/* ONLY SHOW ONCE ANSWER IS SUBMITTED */}
-                {questions.length > 0 &&
-                    <div className="text-white font-bold">
-                        The Answer is: {questions[currentQuestion].pronoun.cz} {questions[currentQuestion].theConjugatedVerbIs.cz}
-                    </div>
-                }
-            </div>
-            {/* <div className='flex flex-col space-y-2 bg-blue-600 rounded-xl mx-2 w-full sm:w-4/5 md:w-3/4 lg:w-1/2 py-9 px-3 md:px-9 bg-duo-hare border-b-4 border-b-duo-wolf'>
-                    verbs
-                </div> */}
-            <div className="flex justify-center align-middle p-4">
-                <button className="button bg-duo-greenMiddle" onClick={() => setState({ ...state, currentQuestion: ++currentQuestion })}>Check</button>
-            </div>
+            }
+
         </div >
     )
 }
