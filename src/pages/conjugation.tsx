@@ -32,7 +32,7 @@ interface IgameSettings {
 }
 
 
-const Conjugation = ({ verbs, query }: { verbs: IVerb[], query: any }) => {
+const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) => {
     const router = useRouter();
     const gameSettings = router.query as unknown as IgameSettings;
     console.log("QUERY ", verbs);
@@ -46,9 +46,11 @@ const Conjugation = ({ verbs, query }: { verbs: IVerb[], query: any }) => {
         possibleAnswers: [],
         selectedAnswer: ""
     }
+
     const [state, setState] = useState(initialState);
-    // const [questions, setQuestions] = useState<IverbQuestion[]>([])
     let { currentQuestion, numberOfQuestions, selectedVerbs, questions, possibleAnswers, selectedAnswer } = state;
+
+    console.log(selectedVerbs);
     let progress = Math.round(currentQuestion / numberOfQuestions * 100)
 
     useEffect(() => {
@@ -120,14 +122,14 @@ const Conjugation = ({ verbs, query }: { verbs: IVerb[], query: any }) => {
 }
 
 export async function getServerSideProps({ query }: { query: any }) {
-    let { data } = await supabase.from('verbs').select()
+    let { data }: { data: any } = await supabase.from('verbs').select()
 
     let numberOfQuestions = query.numberOfQuestions
     let selectedVerbs = query.selectedVerbs
-    let selectedVerbsArray;
+    let selectedVerbsArray: string[];
     let verbsArray: any[] = [];
     if (typeof selectedVerbs === "string") { selectedVerbs = [selectedVerbs] };
-    selectedVerbsArray = selectedVerbs.map(selectedVerb => data.find(verb => verb.infinitive.cz === selectedVerb));
+    selectedVerbsArray = selectedVerbs.map((selectedVerb: string) => data.find((verb: { infinitive: { cz: string; }; }) => verb.infinitive.cz === selectedVerb));
     const random = (arrayLength: number) => Math.floor(Math.random() * arrayLength);
     for (let i = 0; verbsArray.length < numberOfQuestions; i++) {
         const verb = selectedVerbsArray[random(selectedVerbs.length)]
