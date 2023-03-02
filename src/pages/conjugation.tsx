@@ -69,19 +69,6 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
 
     const capitalize = (s: string) => s && s[0].toUpperCase() + s.slice(1)
 
-    const isAnswerCorrect = (answer: boolean) => {
-        return (
-            <>{answer ? (
-                <h2 className='text-nice-greenMiddle text-4xl font-bold'>
-                    Correct!
-                </h2>
-            ) : (
-                <h2 className='text-nice-red text-4xl font-bold'>
-                    Incorrect
-                </h2>)}</>
-        )
-    }
-
     const checkAnswer = () => {
         setShowAnswer(true)
         setState({ ...state, selectedAnswers: [...state.selectedAnswers, state.selectedAnswer === questions[currentQuestion].theConjugatedVerbIs.cz] })
@@ -92,6 +79,18 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
         setState({ ...state, currentQuestion: ++currentQuestion, })
     }
 
+    const isAnswerCorrect = (answer: boolean) => {
+        return (
+            <>{answer ? (
+                <h2 className=' text-duo-greenMiddle text-4xl font-bold'>
+                    Correct!
+                </h2>
+            ) : (
+                <h2 className='text-duo-red text-4xl font-bold'>
+                    Incorrect
+                </h2>)}</>
+        )
+    }
     console.log(selectedAnswers);
 
 
@@ -132,11 +131,14 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
 
                 </div>
                 :
-                <div className="h-20 bg-duo-eel hidden">
+                <div className="h-20 bg-duo-eel">
                     {/* ONLY SHOW ONCE ANSWER IS SUBMITTED */}
                     {questions.length > 0 &&
-                        <div className="text-white font-bold">
-                            The Answer is: {questions[currentQuestion].pronoun.cz} {questions[currentQuestion].theConjugatedVerbIs.cz}
+                        <div className="flex flex-col  justify-center items-center my-3">
+                            <div className="text-white font-bold">
+                                {isAnswerCorrect(selectedAnswers[currentQuestion])}
+                                The Answer is: {questions[currentQuestion].pronoun.cz} {questions[currentQuestion].theConjugatedVerbIs.cz}
+                            </div>
                         </div>
                     }
                 </div>
