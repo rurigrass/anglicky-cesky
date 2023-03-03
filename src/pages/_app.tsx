@@ -18,6 +18,7 @@ function Loading() {
       router.events.off("routeChangeError", handleComplete)
     }
   })
+
   return loading ? (
     <div>
       <div>Loading...</div>
