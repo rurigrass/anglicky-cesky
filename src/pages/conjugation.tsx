@@ -96,7 +96,7 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
 
     return (
         <div className="absolute inset-0 flex flex-col items-stretch bg-duo-eel">
-            {/* <Header /> */}
+            <Header />
             <div className="py-2 bg-duo-eel">
                 <ProgressBar progress={progress} />
             </div>
