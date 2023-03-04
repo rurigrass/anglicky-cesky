@@ -82,11 +82,11 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
     const isAnswerCorrect = (answer: boolean) => {
         return (
             <>{answer ? (
-                <h2 className=' text-duo-greenMiddle text-4xl font-bold'>
+                <h2 className=' text-duo-greenMiddle text-4xl font-bold text-center'>
                     Correct!
                 </h2>
             ) : (
-                <h2 className='text-duo-red text-4xl font-bold'>
+                <h2 className='text-duo-red text-4xl font-bold text-center'>
                     Incorrect
                 </h2>)}</>
         )
