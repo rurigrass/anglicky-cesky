@@ -132,14 +132,12 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
                 :
                 <div className="flex flex-col justify-center items-center flex-1 bg-duo-eel">
                     {/* ONLY SHOW ONCE ANSWER IS SUBMITTED */}
-                    {questions.length > 0 &&
-                        <div className="my-3 ">
-                            <div className="text-white font-bold">
-                                {isAnswerCorrect(selectedAnswers[currentQuestion])}
-                                The Answer is: {questions[currentQuestion].pronoun.cz} {questions[currentQuestion].theConjugatedVerbIs.cz}
-                            </div>
+                    <div className="my-3 ">
+                        <div className="text-white font-bold">
+                            {isAnswerCorrect(selectedAnswers[currentQuestion])}
+                            The Answer is: {questions[currentQuestion].pronoun.cz} {questions[currentQuestion].theConjugatedVerbIs.cz}
                         </div>
-                    }
+                    </div>
                 </div>
             }
             {!showAnswer ?

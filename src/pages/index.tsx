@@ -15,6 +15,8 @@ const Home = () => {
     selectedVerbs: ["být", "mít"]
   }
 
+
+
   return (
     <>
       <Head>
@@ -26,6 +28,13 @@ const Home = () => {
           <button className='button bg-duo-humpback text-white hover:bg-duo-macaw' onClick={() => setShowVocabGame(!showVocabGame)}>
             Vocabulary
           </button>
+          {showVocabGame &&
+            <div className='flex justify-center space-y-2 py-2 bg-duo-wolf rounded-xl border-t-4 border-b-duo-eel'>
+              <button className='button bg-duo-humpback  text-white hover:bg-duo-macaw'>
+                <Link href={{ pathname: '/vocabulary' }}>Start Game </Link>
+              </button>
+            </div>
+          }
           {/* <button className='button bg-duo-humpback  text-white hover:bg-duo-macaw'>
             <Link href={{ pathname: '/river' }}>River Menu </Link>
           </button> */}

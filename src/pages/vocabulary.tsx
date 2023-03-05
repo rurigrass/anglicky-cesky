@@ -1,16 +1,52 @@
 import Header from "@/components/Header"
+import ProgressBar from "@/components/ProgressBar"
+import { useState } from "react";
 
-const vocabulary = () => {
+interface IinitialState {
+    currentQuestion: number,
+    numberOfQuestions: number,
+    // selectedVerbs: string[],
+    // questions: IverbQuestion[],
+    // possibleAnswers: IverbQuestion[],
+    selectedAnswer: string,
+    selectedAnswers: boolean[]
+}
+
+const Vocabulary = () => {
+
+    const initialState = {
+        currentQuestion: 0,
+        numberOfQuestions: 5,
+        // selectedVerbs: gameSettings.selectedVerbs,
+        // questions: verbs,
+        // possibleAnswers: [],
+        selectedAnswer: "",
+        selectedAnswers: []
+    }
+
+    const [state, setState] = useState(initialState);
+    let { currentQuestion, numberOfQuestions, selectedAnswer, selectedAnswers } = state;
+    const [showAnswer, setShowAnswer] = useState<boolean>(false)
+
+
+    let progress = Math.round(currentQuestion / numberOfQuestions * 100)
+
+
     return (
-        <>
+        <div className="absolute inset-0 flex flex-col items-stretch bg-duo-eel">
             <Header />
-            <div className=" h-screen min-h-screen -mt-14 flex justify-center items-center bg-duo-eel">
-                <div className='flex flex-col space-y-2 bg-blue-600 rounded-xl mx-2 w-full sm:w-4/5 md:w-3/4 lg:w-1/2 py-9 px-3 md:px-9 bg-duo-hare border-b-4 border-b-duo-wolf'>
-                    hello
-                </div>
+            <div className="py-2 bg-duo-eel">
+                <ProgressBar progress={progress} />
             </div>
-        </>
+            {!showAnswer ?
+                <div className="flex flex-col flex-1">
+                </div>
+                :
+                <div className="flex flex-col justify-center items-center flex-1 bg-duo-eel">
+                </div>
+            }
+        </div>
     )
 }
 
-export default vocabulary
+export default Vocabulary
