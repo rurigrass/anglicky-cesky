@@ -26,6 +26,9 @@ const Home = () => {
           <button className='button bg-duo-humpback text-white hover:bg-duo-macaw' onClick={() => setShowVocabGame(!showVocabGame)}>
             Vocabulary
           </button>
+          <button className='button bg-duo-humpback  text-white hover:bg-duo-macaw'>
+            <Link href={{ pathname: '/river' }}>River Menu </Link>
+          </button>
           {/* {showVocabGame &&
             <div className='flex justify-center space-y-2 py-2 bg-duo-wolf rounded-xl border-t-4 border-b-duo-eel'>
               <button className='button bg-duo-macaw'>
