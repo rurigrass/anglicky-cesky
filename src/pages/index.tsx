@@ -36,9 +36,9 @@ const Home = () => {
               </button>
             </div>
           } */}
-          <button className='button bg-duo-humpback text-white hover:bg-duo-macaw' onClick={() => setShowConjugationGame(!showConjugationGame)}>
+          {/* <button className='button bg-duo-humpback text-white hover:bg-duo-macaw' onClick={() => setShowConjugationGame(!showConjugationGame)}>
             Verbs
-          </button>
+          </button> */}
           {showConjugationGame &&
             <div className='flex justify-center space-y-2 py-2 bg-duo-wolf rounded-xl border-t-4 border-b-duo-eel'>
               <button className='button bg-duo-humpback  text-white hover:bg-duo-macaw'>

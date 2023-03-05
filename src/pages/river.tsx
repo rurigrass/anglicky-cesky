@@ -28,7 +28,7 @@ const River = () => {
                 {levels.map((level) => (
                     <div
                         key={level}
-                        className={`w-14 h-14 bg-duo-humpback rounded-full border-b-4 border-duo-macaw text-center ${level % 2 === 0 ? "ml-20" : ""
+                        className={`w-14 h-14 bg-duo-humpback rounded-full border-b-4 border-duo-macaw text-center ${level % 2 === 0 ? "ml-28" : ""
                             }`}
                     >
                         {level}
