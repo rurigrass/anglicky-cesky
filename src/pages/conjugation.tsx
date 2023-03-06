@@ -103,49 +103,36 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
             <div className="py-2 bg-duo-eel">
                 <ProgressBar progress={progress} />
             </div>
-            {!showAnswer ?
-                <div className="flex flex-col flex-1">
-                    {/* QUESTION */}
-                    <div className=" p-4 bg-duo-greenMiddle">
-                        {questions.length > 0 &&
-                            <div className="text-white text-2xl font-bold">
-                                Translate: {questions[currentQuestion].pronoun.en} {questions[currentQuestion].theConjugatedVerbIs.en}
-                            </div>
-                        }
-                    </div>
-                    <div className=" bg-duo-eel text-white font-bold flex ml-5 items-center justify-center  flex-1">
-                        {questions.length > 0 &&
-                            <div className="flex items-center m-2  text-lg">{capitalize(questions[currentQuestion].pronoun.cz)}
-                                {selectedAnswer !== "" &&
-                                    <span className="p-2 px-4 rounded-lg border-b-4 bg-black border-duo-wolf ml-2">{` ${selectedAnswer}`}</span>
-                                }
-                            </div>
-                        }
-                    </div>
-                    <div className=" bg-duo-humpback flex justify-center items-center flex-wrap p-3">
-                        <SlidePanel isVisible={!showAnswer}>
-                            {questions.length > 0 && !showAnswer &&
-                                possibleAnswers.map((question, i) =>
-                                    <button key={i} className={`button bg-black text-white m-1 ${question.theConjugatedVerbIs.cz === selectedAnswer && "bg-duo-eel"}`}
-                                        onClick={() => setState({ ...state, selectedAnswer: question.theConjugatedVerbIs.cz })}
-                                    >{question.theConjugatedVerbIs.cz}</button>
-                                )
-                            }
-                        </SlidePanel>
-                    </div>
-                </div>
-                :
-                <div className="flex flex-col justify-center items-center flex-1 bg-duo-eel">
-                    {/* ONLY SHOW ONCE ANSWER IS SUBMITTED */}
-                    {/* <div className="my-3 ">
-                        <div className="text-white font-bold">
-                            {isAnswerCorrect(selectedAnswers[currentQuestion])}
-                            The Answer is: {questions[currentQuestion].pronoun.cz} {questions[currentQuestion].theConjugatedVerbIs.cz}
+            {/* {!showAnswer ? */}
+            <div className="flex flex-col flex-1">
+                {/* QUESTION */}
+                <div className=" p-4 bg-duo-greenMiddle">
+                    {questions.length > 0 &&
+                        <div className="text-white text-2xl font-bold">
+                            Translate: {questions[currentQuestion].pronoun.en} {questions[currentQuestion].theConjugatedVerbIs.en}
                         </div>
-                    </div> */}
+                    }
                 </div>
-            }
-            <div className="flex flex-col justify-center align-middle bg-duo-wolf  p-4">
+                <div className=" bg-duo-eel text-white font-bold flex ml-5 items-center justify-center  flex-1">
+                    {questions.length > 0 &&
+                        <div className="flex items-center m-2  text-lg">{capitalize(questions[currentQuestion].pronoun.cz)}
+                            {selectedAnswer !== "" &&
+                                <span className="p-2 px-4 rounded-lg border-b-4 bg-black border-duo-wolf ml-2">{` ${selectedAnswer}`}</span>
+                            }
+                        </div>
+                    }
+                </div>
+                <div className=" bg-duo-eel flex justify-center items-center flex-wrap p-3">
+                    {questions.length > 0 && !showAnswer &&
+                        possibleAnswers.map((question, i) =>
+                            <button key={i} className={`button bg-black text-white m-1 ${question.theConjugatedVerbIs.cz === selectedAnswer && "bg-duo-eel"}`}
+                                onClick={() => setState({ ...state, selectedAnswer: question.theConjugatedVerbIs.cz })}
+                            >{question.theConjugatedVerbIs.cz}</button>
+                        )
+                    }
+                </div>
+            </div>
+            <div className="flex flex-col justify-center align-middle bg-duo-wolf p-4 mt-10">
                 <SlidePanel isVisible={showAnswer}>
                     {/* {showAnswer && */}
                     <div className="">
@@ -161,7 +148,6 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
                     <button className="button bg-duo-greenMiddle" onClick={() => nextQuestion()}>Next</button>
                 }
             </div>
-
         </div >
     )
 }

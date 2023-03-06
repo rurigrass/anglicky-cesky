@@ -6,8 +6,6 @@ import useMeasure from "react-use-measure";
 const SlidePanel = ({ isVisible = true, children, delayTime = 0.5, durationTime = 0.5 }: { isVisible?: boolean, children: React.ReactNode, delayTime?: number, durationTime?: number }) => {
     let [ref, { height }] = useMeasure();
 
-    console.log(height);
-
     return (
         <AnimatePresence>
             {isVisible &&
