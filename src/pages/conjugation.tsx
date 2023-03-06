@@ -5,6 +5,7 @@ import { IVerb } from "typings";
 import { supabase } from "../../lib/supabaseClient"
 import { useRouter } from "next/router";
 import pronouns from "lib/pronouns";
+import SlidePanel from "@/components/motion/SlidePanel";
 
 interface IinitialState {
     currentQuestion: number,
@@ -81,14 +82,16 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
 
     const isAnswerCorrect = (answer: boolean) => {
         return (
-            <>{answer ? (
-                <h2 className=' text-duo-greenMiddle text-4xl font-bold text-center'>
+            <>{answer ?
+                <h2 className=' text-duo-greenMiddle text-4xl font-bold'>
                     Correct!
                 </h2>
-            ) : (
-                <h2 className='text-duo-red text-4xl font-bold text-center'>
+                :
+                <h2 className='text-duo-red text-4xl font-bold'>
                     Incorrect
-                </h2>)}</>
+                </h2>
+            }
+            </>
         )
     }
     console.log(selectedAnswers);
@@ -120,35 +123,44 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
                         }
                     </div>
                     <div className=" bg-duo-humpback flex justify-center items-center flex-wrap p-3">
-                        {questions.length > 0 &&
-                            possibleAnswers.map((question, i) =>
-                                <button key={i} className={`button bg-black text-white m-1 ${question.theConjugatedVerbIs.cz === selectedAnswer && "bg-duo-eel"}`}
-                                    onClick={() => setState({ ...state, selectedAnswer: question.theConjugatedVerbIs.cz })}
-                                >{question.theConjugatedVerbIs.cz}</button>
-                            )
-                        }
+                        <SlidePanel isVisible={!showAnswer}>
+                            {questions.length > 0 && !showAnswer &&
+                                possibleAnswers.map((question, i) =>
+                                    <button key={i} className={`button bg-black text-white m-1 ${question.theConjugatedVerbIs.cz === selectedAnswer && "bg-duo-eel"}`}
+                                        onClick={() => setState({ ...state, selectedAnswer: question.theConjugatedVerbIs.cz })}
+                                    >{question.theConjugatedVerbIs.cz}</button>
+                                )
+                            }
+                        </SlidePanel>
                     </div>
                 </div>
                 :
                 <div className="flex flex-col justify-center items-center flex-1 bg-duo-eel">
                     {/* ONLY SHOW ONCE ANSWER IS SUBMITTED */}
-                    <div className="my-3 ">
+                    {/* <div className="my-3 ">
                         <div className="text-white font-bold">
                             {isAnswerCorrect(selectedAnswers[currentQuestion])}
                             The Answer is: {questions[currentQuestion].pronoun.cz} {questions[currentQuestion].theConjugatedVerbIs.cz}
                         </div>
+                    </div> */}
+                </div>
+            }
+            <div className="flex flex-col justify-center align-middle bg-duo-wolf  p-4">
+                <SlidePanel isVisible={showAnswer}>
+                    {/* {showAnswer && */}
+                    <div className="">
+                        {isAnswerCorrect(selectedAnswers[currentQuestion])}
+                        The Answer is: {questions[currentQuestion].pronoun.cz} {questions[currentQuestion].theConjugatedVerbIs.cz}
                     </div>
-                </div>
-            }
-            {!showAnswer ?
-                <div className="flex justify-center align-middle p-4">
+                    {/* } */}
+                </SlidePanel>
+                {!showAnswer ?
                     <button className="button bg-duo-greenMiddle" onClick={() => checkAnswer()} > Check</button>
-                </div>
-                :
-                <div className="flex justify-center align-middle p-4">
+
+                    :
                     <button className="button bg-duo-greenMiddle" onClick={() => nextQuestion()}>Next</button>
-                </div>
-            }
+                }
+            </div>
 
         </div >
     )
