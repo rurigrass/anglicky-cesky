@@ -77,7 +77,7 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
 
     const nextQuestion = () => {
         setShowAnswer(false)
-        setState({ ...state, currentQuestion: ++currentQuestion, })
+        setState({ ...state, currentQuestion: ++currentQuestion, selectedAnswer: "" })
     }
 
     const isAnswerCorrect = (answer: boolean) => {
