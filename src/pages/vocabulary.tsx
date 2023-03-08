@@ -15,7 +15,7 @@ interface IinitialState {
 }
 
 const Vocabulary = ({ nouns }: { nouns: any[] }) => {
-    console.log(nouns);
+    console.log("the nouns: ", nouns);
 
 
     const initialState = {
