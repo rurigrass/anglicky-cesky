@@ -1,6 +1,7 @@
 import Header from "@/components/Header"
 import SlidePanel from "@/components/motion/SlidePanel";
 import ProgressBar from "@/components/ProgressBar"
+import { supabase } from "lib/supabaseClient";
 import { useState } from "react";
 
 interface IinitialState {
@@ -13,7 +14,9 @@ interface IinitialState {
     selectedAnswers: boolean[]
 }
 
-const Vocabulary = () => {
+const Vocabulary = ({ nouns }: { nouns: any[] }) => {
+    console.log(nouns);
+
 
     const initialState = {
         currentQuestion: 0,
@@ -74,3 +77,13 @@ const Vocabulary = () => {
 }
 
 export default Vocabulary
+
+export async function getServerSideProps({ query }: { query: any }) {
+    let { data }: { data: any } = await supabase.from('nouns').select()
+
+    return {
+        props: {
+            nouns: data
+        },
+    }
+}
