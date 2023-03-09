@@ -79,7 +79,8 @@ const Vocabulary = ({ nouns }: { nouns: any[] }) => {
 export default Vocabulary
 
 export async function getServerSideProps({ query }: { query: any }) {
-    let { data }: { data: any } = await supabase.from('nouns').select()
+    //this takes the nouns and filters them by category
+    let { data }: { data: any } = await supabase.from('nouns').select().contains('category', { cz: "profese" })
 
     return {
         props: {
