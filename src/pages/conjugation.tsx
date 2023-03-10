@@ -57,6 +57,7 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
     let progress = Math.round(currentQuestion / numberOfQuestions * 100)
 
     useEffect(() => {
+        //this function gets random possible answers answers
         const getMultipleRandom = (arr: IverbQuestion[], num: number, answer: IverbQuestion) => {
             const shuffled = [...arr, answer].sort(() => 0.5 - Math.random());
             const possibleAnswers = shuffled.slice(0, num);
