@@ -80,13 +80,13 @@ export default Vocabulary
 
 export async function getServerSideProps({ query }: { query: any }) {
     //this takes the nouns and filters them by category
-    let { data }: { data: any } = await supabase.from('nouns').select(`noun, plural, gender`).contains('category', { cz: "profese" })
+    let { data }: { data: any } = await supabase.from('nouns').select(`singular, plural, gender`).contains('category', { cz: "profese" })
     let numberOfQuestions = 5;
     let randomNounsArray: any[] = [];
-    for (let i = 0; randomNounsArray.length < numberOfQuestions; i++) {
-        const amountArray = ["singular", "plural"] as const
-        randomNounsArray.push()
-    }
+    // for (let i = 0; randomNounsArray.length < numberOfQuestions; i++) {
+    //     const amountArray = ["singular", "plural"] as const
+    //     randomNounsArray.push()
+    // }
 
 
     return {

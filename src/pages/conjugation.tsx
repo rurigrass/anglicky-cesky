@@ -140,9 +140,9 @@ const Conjugation = ({ verbs, query }: { verbs: IverbQuestion[], query: any }) =
                     </div>
                 </SlidePanel>
                 {!showAnswer ?
-                    <button className="button bg-duo-greenMiddle" onClick={() => checkAnswer()} > Check</button>
+                    <button className="button bg-duo-greenMiddle hover:bg-duo-featherGreen disabled:bg-duo-greenMiddle disabled:hover:opacity-80 " disabled={state.selectedAnswer === ""} onClick={() => checkAnswer()} > Check</button>
                     :
-                    <button className="button bg-duo-greenMiddle" onClick={() => nextQuestion()}>Next</button>
+                    <button className="button bg-duo-greenMiddle hover:bg-duo-featherGreen" onClick={() => nextQuestion()}>Next</button>
                 }
             </div>
         </div >
