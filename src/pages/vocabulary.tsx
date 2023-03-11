@@ -15,18 +15,18 @@ interface IinitialState {
 }
 
 const Vocabulary = ({ nouns }: { nouns: any[] }) => {
-    console.log("the nouns: ", nouns);
 
 
     const initialState = {
         currentQuestion: 0,
         numberOfQuestions: 5,
         // selectedVerbs: gameSettings.selectedVerbs,
-        // questions: verbs,
+        questions: nouns,
         // possibleAnswers: [],
         selectedAnswer: "",
         selectedAnswers: []
     }
+    console.log("the nouns: ", initialState);
 
     const [state, setState] = useState(initialState);
     let { currentQuestion, numberOfQuestions, selectedAnswer, selectedAnswers } = state;
