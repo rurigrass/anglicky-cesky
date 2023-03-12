@@ -8,7 +8,7 @@ interface IinitialState {
     currentQuestion: number,
     numberOfQuestions: number,
     // selectedVerbs: string[],
-    // questions: IverbQuestion[],
+    questions: any[],
     // possibleAnswers: IverbQuestion[],
     selectedAnswer: string,
     selectedAnswers: boolean[]
@@ -17,7 +17,7 @@ interface IinitialState {
 const Vocabulary = ({ nouns }: { nouns: any[] }) => {
 
 
-    const initialState = {
+    const initialState: IinitialState = {
         currentQuestion: 0,
         numberOfQuestions: 5,
         // selectedVerbs: gameSettings.selectedVerbs,
