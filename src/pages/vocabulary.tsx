@@ -9,40 +9,92 @@ interface IinitialState {
   numberOfQuestions: number;
   // selectedVerbs: string[],
   questions: any[];
-  // possibleAnswers: IverbQuestion[],
+  possibleAnswers: Inoun[];
   selectedAnswer: string;
   selectedAnswers: boolean[];
 }
 
-const Vocabulary = ({ nouns }: { nouns: any[] }) => {
+interface Inoun {
+  gender: string;
+  singular: {
+    cz: string;
+    en: string;
+  };
+  plural: {
+    cz: string;
+    en: string;
+  };
+}
+
+const Vocabulary = ({ nouns }: { nouns: Inoun[] }) => {
   const initialState: IinitialState = {
     currentQuestion: 0,
     numberOfQuestions: 5,
     // selectedVerbs: gameSettings.selectedVerbs,
     questions: nouns,
-    // possibleAnswers: [],
+    possibleAnswers: [],
     selectedAnswer: "",
     selectedAnswers: [],
   };
-  console.log("the nouns: ", initialState);
 
   const [state, setState] = useState(initialState);
-  
-  let { currentQuestion, numberOfQuestions, selectedAnswer, selectedAnswers } =
-    state;
+
+  let {
+    currentQuestion,
+    numberOfQuestions,
+    questions,
+    possibleAnswers,
+    selectedAnswer,
+    selectedAnswers,
+  } = state;
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
 
   let progress = Math.round((currentQuestion / numberOfQuestions) * 100);
 
+  useEffect(() => {
+    //this function gets random possible answers
+    const getMultipleRandom = (arr: Inoun[], num: number, answer: Inoun) => {
+      const shuffled = [...arr, answer].sort(() => 0.5 - Math.random());
+      const uniqueShuffled = [...new Set(shuffled)];
+      const possibleAnswers = uniqueShuffled.slice(0, num);
+      setState({ ...state, possibleAnswers });
+    };
+    getMultipleRandom(questions, 5, questions[currentQuestion]);
+  }, [currentQuestion]);
+
   const checkAnswer = () => {
     setShowAnswer(true);
-    // setState({ ...state, selectedAnswers: [...state.selectedAnswers, state.selectedAnswer === questions[currentQuestion].theConjugatedVerbIs.cz] })
+    setState({
+      ...state,
+      selectedAnswers: [
+        ...state.selectedAnswers,
+        state.selectedAnswer === questions[currentQuestion].singular.cz,
+      ],
+    });
   };
 
   const nextQuestion = () => {
     setShowAnswer(false);
-    // setState({ ...state, currentQuestion: ++currentQuestion, })
+    setState({
+      ...state,
+      currentQuestion: ++currentQuestion,
+      selectedAnswer: "",
+    });
   };
+
+  const isAnswerCorrect = (answer: boolean) => {
+    return (
+      <>
+        {answer ? (
+          <h2 className=" text-duo-greenMiddle text-4xl font-bold">Correct!</h2>
+        ) : (
+          <h2 className="text-duo-red text-4xl font-bold">Incorrect</h2>
+        )}
+      </>
+    );
+  };
+
+  const capitalize = (s: string) => s && s[0].toUpperCase() + s.slice(1);
 
   return (
     <div className="absolute inset-0 flex flex-col items-stretch bg-duo-eel">
@@ -50,15 +102,49 @@ const Vocabulary = ({ nouns }: { nouns: any[] }) => {
       <div className="py-2 bg-duo-eel">
         <ProgressBar progress={progress} />
       </div>
-      {!showAnswer ? (
-        <div className="flex flex-col flex-1"></div>
-      ) : (
-        <div className="flex flex-col flex-1 justify-center items-center  bg-duo-eel"></div>
-      )}
-
+      {/* MAIN CENTRAL BIT */}
+      <div className="flex flex-col flex-1">
+        <div className=" p-4 bg-duo-greenMiddle">
+          <div className="text-white text-2xl font-bold">
+            Translate: {questions[currentQuestion].singular.en}{" "}
+            {`(${questions[currentQuestion].gender})`}
+          </div>
+        </div>
+        <div className=" bg-duo-eel text-white font-bold flex ml-5 items-center justify-center  flex-1">
+          {questions.length > 0 && (
+            <div className="flex items-center m-2 text-4xl">
+              {selectedAnswer !== "" && (
+                <span className="p-2 px-4 rounded-lg border-b-4 bg-black border-duo-wolf ml-2">{` ${selectedAnswer}`}</span>
+              )}
+            </div>
+          )}
+        </div>
+        <div className=" bg-duo-eel flex justify-center items-center flex-wrap p-3">
+          {questions.length > 0 &&
+            possibleAnswers.map((question, i) => (
+              <button
+                key={i}
+                className={`button bg-black text-white m-1 ${
+                  question.singular.cz === selectedAnswer && "bg-duo-eel"
+                }`}
+                onClick={() =>
+                  setState({
+                    ...state,
+                    selectedAnswer: question.singular.cz,
+                  })
+                }
+              >
+                {question.singular.cz}
+              </button>
+            ))}
+        </div>
+      </div>
       <div className="flex flex-col justify-center align-middle bg-duo-wolf  p-4">
         <SlidePanel isVisible={showAnswer}>
-          <div className="flex justify-center pb-4">good job</div>
+          <div className="text-center pb-4">
+            {isAnswerCorrect(selectedAnswers[currentQuestion])}
+            The Answer is: {questions[currentQuestion].singular.cz}
+          </div>
         </SlidePanel>
         {!showAnswer ? (
           <button
@@ -89,7 +175,7 @@ export async function getServerSideProps({ query }: { query: any }) {
     .from("random_nouns")
     .select(`singular, plural, gender`)
     .contains("category", { cz: "profese" })
-    .limit(5)
+    .limit(5);
 
   return {
     props: {
