@@ -68,11 +68,6 @@ const Conjugation = ({
 
   let progress = Math.round((currentQuestion / numberOfQuestions) * 100);
 
-//   const removeDuplicates = (arr, ) => {
-
-//   }
-
-
   useEffect(() => {
     //this function gets random possible answers answers
     const getMultipleRandom = (
@@ -146,7 +141,7 @@ const Conjugation = ({
         </div>
         <div className=" bg-duo-eel text-white font-bold flex ml-5 items-center justify-center  flex-1">
           {questions.length > 0 && (
-            <div className="flex items-center m-2  text-lg">
+            <div className="flex items-center m-2 text-4xl">
               {capitalize(questions[currentQuestion].pronoun.cz)}
               {selectedAnswer !== "" && (
                 <span className="p-2 px-4 rounded-lg border-b-4 bg-black border-duo-wolf ml-2">{` ${selectedAnswer}`}</span>
@@ -207,7 +202,7 @@ const Conjugation = ({
 
 export async function getServerSideProps({ query }: { query: any }) {
   let { data }: { data: any } = await supabase.from("verbs").select();
-
+ 
   let numberOfQuestions = query.numberOfQuestions;
   let selectedVerbs = query.selectedVerbs;
   let selectedVerbsArray: IVerb[];
