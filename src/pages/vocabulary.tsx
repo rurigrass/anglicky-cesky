@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import SlidePanel from "@/components/motion/SlidePanel";
 import ProgressBar from "@/components/ProgressBar";
+import capitalize from "@/helpers/functions";
 import { supabase } from "lib/supabaseClient";
 import { useEffect, useState } from "react";
 
@@ -94,8 +95,6 @@ const Vocabulary = ({ nouns }: { nouns: Inoun[] }) => {
     );
   };
 
-  const capitalize = (s: string) => s && s[0].toUpperCase() + s.slice(1);
-
   return (
     <div className="absolute inset-0 flex flex-col items-stretch bg-duo-eel">
       <Header />
@@ -104,13 +103,13 @@ const Vocabulary = ({ nouns }: { nouns: Inoun[] }) => {
       </div>
       {/* MAIN CENTRAL BIT */}
       <div className="flex flex-col flex-1">
-        <div className=" p-4 bg-duo-greenMiddle">
+        <div className="p-4 bg-duo-greenMiddle">
           <div className="text-white text-2xl font-bold">
-            Translate: {questions[currentQuestion].singular.en}{" "}
+            Translate: {capitalize(questions[currentQuestion].singular.en)}{" "}
             {`(${questions[currentQuestion].gender})`}
           </div>
         </div>
-        <div className=" bg-duo-eel text-white font-bold flex ml-5 items-center justify-center  flex-1">
+        <div className=" bg-duo-eel text-white font-bold flex items-center justify-center  flex-1">
           {questions.length > 0 && (
             <div className="flex items-center m-2 text-4xl">
               {selectedAnswer !== "" && (
@@ -148,7 +147,8 @@ const Vocabulary = ({ nouns }: { nouns: Inoun[] }) => {
         </SlidePanel>
         {!showAnswer ? (
           <button
-            className="button bg-duo-greenMiddle"
+            className="button bg-duo-featherGreen disabled:bg-duo-greenMiddle hover:bg-duo-maskGreen"
+            disabled={selectedAnswer ? false : true}
             onClick={() => checkAnswer()}
           >
             {" "}

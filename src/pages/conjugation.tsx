@@ -6,6 +6,7 @@ import { supabase } from "../../lib/supabaseClient";
 import { useRouter } from "next/router";
 import pronouns from "lib/pronouns";
 import SlidePanel from "@/components/motion/SlidePanel";
+import capitalize from "@/helpers/functions";
 
 interface IinitialState {
   currentQuestion: number;
@@ -82,8 +83,6 @@ const Conjugation = ({
     };
     getMultipleRandom(questions, 5, questions[currentQuestion]);
   }, [currentQuestion]);
-
-  const capitalize = (s: string) => s && s[0].toUpperCase() + s.slice(1);
 
   const checkAnswer = () => {
     setShowAnswer(true);
