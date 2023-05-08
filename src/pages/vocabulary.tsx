@@ -105,7 +105,7 @@ const Vocabulary = ({ nouns }: { nouns: Inoun[] }) => {
       <div className="flex flex-col flex-1">
         <div className="p-4 bg-duo-greenMiddle">
           <div className="text-white text-2xl font-bold">
-            Translate: {capitalize(questions[currentQuestion].singular.en)}{" "}
+            How do you say: "{capitalize(questions[currentQuestion].singular.en)}"{" "}
             {`(${questions[currentQuestion].gender})`}
           </div>
         </div>
