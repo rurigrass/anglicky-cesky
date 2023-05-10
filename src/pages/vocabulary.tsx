@@ -104,7 +104,7 @@ const Vocabulary = ({ nouns }: { nouns: Inoun[] }) => {
       {/* MAIN CENTRAL BIT */}
       <div className="flex flex-col flex-1">
         <div className="p-4 bg-duo-greenMiddle">
-          <div className="text-white text-2xl font-bold">
+          <div className="text-white text-2xl font-semibold">
             How do you say: "{capitalize(questions[currentQuestion].singular.en)}"{" "}
             {`(${questions[currentQuestion].gender})`}
           </div>
